@@ -115,7 +115,10 @@ public class CadAlunoFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoveActionPerformed
-        // TODO add your handling code here:
+        Aluno aluno = new Aluno();
+        aluno.setNomeAluno(txtName.getText());
+        
+   
     }//GEN-LAST:event_btnMoveActionPerformed
 
     /**
