@@ -21,7 +21,7 @@ public class ConnectionFactory {
         String senha = "12345678";
         String host = "localhost";
         String porta = "3306";
-        String bd = "fiap";
+        String bd = "db_educativa";
         
         try{
             //Define o Driver
