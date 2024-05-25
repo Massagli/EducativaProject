@@ -52,7 +52,13 @@ public class CadAlunoFrame extends javax.swing.JFrame {
         jLabel11.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/IconProf.png"))); // NOI18N
         getContentPane().add(jLabel11, new org.netbeans.lib.awtextra.AbsoluteConstraints(860, 350, -1, -1));
 
+        jLabel10.setForeground(new java.awt.Color(0, 0, 255));
         jLabel10.setText("Quero me cadastrar");
+        jLabel10.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel10MouseClicked(evt);
+            }
+        });
         getContentPane().add(jLabel10, new org.netbeans.lib.awtextra.AbsoluteConstraints(700, 400, -1, -1));
 
         jLabel9.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
@@ -64,6 +70,11 @@ public class CadAlunoFrame extends javax.swing.JFrame {
         btnBack.setForeground(new java.awt.Color(255, 255, 255));
         btnBack.setText("Voltar");
         btnBack.setBorder(null);
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(390, 610, 122, 40));
 
         btnMove.setBackground(new java.awt.Color(47, 72, 88));
@@ -120,6 +131,18 @@ public class CadAlunoFrame extends javax.swing.JFrame {
         
    
     }//GEN-LAST:event_btnMoveActionPerformed
+
+    private void jLabel10MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel10MouseClicked
+        CadProfFrame profFrame = new CadProfFrame();
+        this.dispose();
+        profFrame.setVisible(true);
+    }//GEN-LAST:event_jLabel10MouseClicked
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        LoginFrame loginFrame = new LoginFrame();
+        this.dispose();
+        loginFrame.setVisible(true);
+    }//GEN-LAST:event_btnBackActionPerformed
 
     /**
      * @param args the command line arguments

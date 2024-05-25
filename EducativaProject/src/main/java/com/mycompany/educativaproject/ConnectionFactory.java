@@ -16,12 +16,13 @@ import java.sql.SQLException;
  */
 public class ConnectionFactory {
     
-    public void conexao(){
+    public Connection conexao(){
         String usuario = "root";
         String senha = "12345678";
         String host = "localhost";
         String porta = "3306";
         String bd = "db_educativa";
+        Connection conexao = null;
         
         try{
             //Define o Driver
@@ -29,10 +30,10 @@ public class ConnectionFactory {
             
             //abertura conexão
             //definindo url
-            Connection conexao = DriverManager.getConnection("jdbc:mysql://" + host + ":" + porta + "/" + bd,usuario,senha);
+            conexao = DriverManager.getConnection("jdbc:mysql://" + host + ":" + porta + "/" + bd,usuario,senha);
             System.out.println("Conectou com sucesso");
             
-            conexao.close();
+            //conexao.close();
         //tratando erro de conexao
         }catch(SQLException e){
             System.err.println("Não foi possível conectar ao banco");
@@ -42,6 +43,7 @@ public class ConnectionFactory {
             System.err.println("O driver JDBC não foi encontrado");
             e.printStackTrace();
         }
+        return conexao;
     }
         
     

@@ -4,6 +4,11 @@
  */
 package com.mycompany.educativaproject;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author adrie
@@ -54,7 +59,13 @@ public class LoginFrame extends javax.swing.JFrame {
         });
         getContentPane().add(btnLogin, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 470, 340, 40));
 
+        jLabel4.setForeground(new java.awt.Color(0, 0, 255));
         jLabel4.setText("Cadastrar");
+        jLabel4.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel4MouseClicked(evt);
+            }
+        });
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 430, -1, -1));
 
         jLabel3.setText("Esqueci minha senha");
@@ -73,8 +84,59 @@ public class LoginFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
-        // TODO add your handling code here:
+        PerfilFrame perfil = new PerfilFrame();
+        ConnectionFactory connection = new ConnectionFactory();
+        PreparedStatement pstmt = null;
+        PreparedStatement pstmtProf = null;
+        
+
+        try(Connection c = connection.conexao()){
+           
+            pstmt = c.prepareStatement("SELECT * FROM tb_aluno");
+            ResultSet result = pstmt.executeQuery();
+            pstmtProf = c.prepareStatement("SELECT * FROM tb_professor");
+            ResultSet result2 = pstmtProf.executeQuery();
+            
+            while(result.next()){
+                String email = result.getString("emailAluno");
+                String senha = result.getString("senhaAluno");
+                if(email.equals(txtEmail.getText()) && senha.equals(new String(txtPassword.getPassword()))){
+                    this.dispose();
+                    perfil.setVisible(true);
+                }
+                
+            }
+            
+            while(result2.next()){
+                String email = result2.getString("emailProfessor");
+                String senha = result2.getString("senhaProfessor");
+                if(email.equals(txtEmail.getText()) && senha.equals(new String(txtPassword.getPassword()))){
+                    this.dispose();
+                    perfil.setVisible(true);
+                }
+            }
+           
+            
+            
+            
+            
+        }catch (Exception e){
+            e.printStackTrace();
+        }
+
+        
+        
+        
+        
+        
+        
     }//GEN-LAST:event_btnLoginActionPerformed
+
+    private void jLabel4MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel4MouseClicked
+        CadAlunoFrame frameAluno = new CadAlunoFrame();
+        frameAluno.setVisible(true);
+        this.dispose();
+    }//GEN-LAST:event_jLabel4MouseClicked
 
     /**
      * @param args the command line arguments
