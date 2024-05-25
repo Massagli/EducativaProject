@@ -88,9 +88,11 @@ public class LoginFrame extends javax.swing.JFrame {
         ConnectionFactory connection = new ConnectionFactory();
         PreparedStatement pstmt = null;
         PreparedStatement pstmtProf = null;
+        String emailTest = txtEmail.getText();
+        String senhaTest = new String(txtPassword.getPassword());
         
-
-        try(Connection c = connection.conexao()){
+        if(emailTest != null && senhaTest != null){
+            try(Connection c = connection.conexao()){
            
             pstmt = c.prepareStatement("SELECT * FROM tb_aluno");
             ResultSet result = pstmt.executeQuery();
@@ -115,14 +117,17 @@ public class LoginFrame extends javax.swing.JFrame {
                     perfil.setVisible(true);
                 }
             }
-           
+             
+            }catch (Exception e){
+                e.printStackTrace();
+            }
             
             
             
-            
-        }catch (Exception e){
-            e.printStackTrace();
         }
+        
+
+        
 
         
         
