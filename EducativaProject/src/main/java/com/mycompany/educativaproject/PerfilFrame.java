@@ -108,13 +108,13 @@ public class PerfilFrame extends javax.swing.JFrame {
 
         btnEditar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnEditar.setText("Editar");
-        btnEditar.setBorder(new javax.swing.border.MatteBorder(null));
+        btnEditar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
         getContentPane().add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 270, 122, 40));
 
         btnExcluir.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnExcluir.setForeground(new java.awt.Color(255, 0, 0));
         btnExcluir.setText("Excluir");
-        btnExcluir.setBorder(javax.swing.BorderFactory.createMatteBorder(1, 1, 1, 1, new java.awt.Color(255, 0, 0)));
+        btnExcluir.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 0)));
         getContentPane().add(btnExcluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 270, 122, 40));
 
         btnAtualizar.setBackground(new java.awt.Color(0, 147, 40));
