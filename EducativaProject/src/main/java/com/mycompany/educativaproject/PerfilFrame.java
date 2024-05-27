@@ -159,6 +159,8 @@ public class PerfilFrame extends javax.swing.JFrame {
             }
         });
         getContentPane().add(btnAtualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 640, 122, 40));
+
+        lblId.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
         getContentPane().add(lblId, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 240, -1, -1));
 
         pack();

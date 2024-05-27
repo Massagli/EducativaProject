@@ -85,19 +85,26 @@ public class LoginFrame extends javax.swing.JFrame {
 
     private void btnLoginActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnLoginActionPerformed
         PerfilFrame perfil = new PerfilFrame();
+        //cria objeto da classe conexão
         ConnectionFactory connection = new ConnectionFactory();
+        //variavel da classe preparedStatement que carrega o script 
         PreparedStatement pstmt = null;
         PreparedStatement pstmtProf = null;
-        String emailTest = txtEmail.getText();
+        //cria variavel que carrega os valores da caixa de texto
+        String emailTest = txtEmail.getText(); 
+        //cria variavel que carrega os valores da caixa de texto
         String senhaTest = new String(txtPassword.getPassword());
         
         if(emailTest != null && senhaTest != null){
+            //recebe a conexão
             try(Connection c = connection.conexao()){
            
             pstmt = c.prepareStatement("SELECT * FROM tb_aluno");
             ResultSet result = pstmt.executeQuery();
             pstmtProf = c.prepareStatement("SELECT * FROM tb_professor");
             ResultSet result2 = pstmtProf.executeQuery();
+            
+            
             
             while(result.next()){
                 String email = result.getString("emailAluno");
@@ -127,7 +134,6 @@ public class LoginFrame extends javax.swing.JFrame {
             
             
         }
-        
 
         
 
