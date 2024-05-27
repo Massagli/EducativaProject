@@ -1,5 +1,8 @@
 package com.mycompany.educativaproject;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
 
 public class Aluno {
    private String nomeAluno,cpfAluno,emailAluno,senhaAluno;
@@ -58,7 +61,36 @@ public class Aluno {
     
     
     
+    //----------------------------
     
+    
+    public void deleteAluno(int id){
+        ConnectionFactory connection = new ConnectionFactory();
+        
+        try(Connection c = connection.conexao()){
+            PreparedStatement pstmt = c.prepareStatement("DELETE FROM tb_aluno WHERE idAluno = ?");
+            pstmt.setInt(1,id);
+            pstmt.execute();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
+    
+   public void updateAluno(String nome, String email, String cpf, String senha, int id){
+       ConnectionFactory connection = new ConnectionFactory();
+       try(Connection c = connection.conexao()){
+            PreparedStatement pstmt = c.prepareStatement("UPDATE tb_aluno SET nomeAluno = ?, emailAluno = ?, cpfAluno = ?, senhaAluno = ? WHERE idAluno = ?");
+            pstmt.setString(1, nome);
+            pstmt.setString(2, email);
+            pstmt.setString(3, cpf);
+            pstmt.setString(4, senha);
+            pstmt.setInt(5,id);
+            pstmt.executeUpdate();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+       
+   }
     
     
     

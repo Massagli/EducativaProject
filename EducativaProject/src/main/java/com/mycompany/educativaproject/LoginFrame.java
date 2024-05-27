@@ -102,18 +102,20 @@ public class LoginFrame extends javax.swing.JFrame {
             while(result.next()){
                 String email = result.getString("emailAluno");
                 String senha = result.getString("senhaAluno");
-                if(email.equals(txtEmail.getText()) && senha.equals(new String(txtPassword.getPassword()))){
+                if(email.equals(txtEmail.getText()) && senha.equals(new String(txtPassword.getPassword()))){ 
                     this.dispose();
+                    perfil.moveParam(result.getString("nomeAluno"), result.getString("emailAluno"), result.getString("cpfAluno"), result.getString("senhaAluno"), result.getInt("idAluno"));
                     perfil.setVisible(true);
                 }
                 
             }
             
             while(result2.next()){
-                String email = result2.getString("emailProfessor");
-                String senha = result2.getString("senhaProfessor");
-                if(email.equals(txtEmail.getText()) && senha.equals(new String(txtPassword.getPassword()))){
+                String email2 = result2.getString("emailProfessor");
+                String senha2 = result2.getString("senhaProfessor");
+                if(email2.equals(txtEmail.getText()) && senha2.equals(new String(txtPassword.getPassword()))){
                     this.dispose();
+                    perfil.moveParam(result2.getString("nomeProf"), result2.getString("emailProfessor"), result2.getString("cpfProfessor"), result2.getString("senhaProfessor"), result2.getInt("idProfessor"));
                     perfil.setVisible(true);
                 }
             }

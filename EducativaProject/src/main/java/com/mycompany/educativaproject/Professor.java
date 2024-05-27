@@ -1,6 +1,9 @@
 
 package com.mycompany.educativaproject;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
 
 public class Professor {
     private String nomeProfessor,cpfProfessor,emailProfessor,formacaoProfessor,
@@ -70,7 +73,20 @@ public class Professor {
     
     
     
+    //-----------------------
     
+    
+    public void deleteProfessor(int id){
+        ConnectionFactory connection = new ConnectionFactory();
+        
+        try(Connection c = connection.conexao()){
+            PreparedStatement pstmt = c.prepareStatement("DELETE FROM tb_professor WHERE idProfessor = ?");
+            pstmt.setInt(1, id);
+            pstmt.execute();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+    }
     
     
     

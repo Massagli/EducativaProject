@@ -4,6 +4,11 @@
  */
 package com.mycompany.educativaproject;
 
+import java.awt.Color;
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+
 /**
  *
  * @author adrie
@@ -15,6 +20,22 @@ public class PerfilFrame extends javax.swing.JFrame {
      */
     public PerfilFrame() {
         initComponents();
+
+        
+    }
+    
+    public void moveParam(String nome,String email,String cpf,String senha, int id){
+        lblId.setText(Integer.toString(id));
+        lblName.setText(nome);
+        txtName.setText(nome);
+        txtName.setEnabled(false);
+        txtEmail.setText(email);
+        txtEmail.setEnabled(false);
+        txtCpf.setText(cpf);
+        txtCpf.setEnabled(false);
+        txtPassword.setText(senha);
+        txtPassword.setEnabled(false);
+
     }
 
     /**
@@ -26,27 +47,38 @@ public class PerfilFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        txtName = new javax.swing.JTextField();
+        txtCpf = new javax.swing.JTextField();
+        txtPassword = new javax.swing.JTextField();
+        txtEmail = new javax.swing.JTextField();
         jLabel1 = new javax.swing.JLabel();
         jPanel1 = new javax.swing.JPanel();
         jLabel7 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
         jPanel2 = new javax.swing.JPanel();
-        jLabel2 = new javax.swing.JLabel();
+        lblName = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
-        txtName = new javax.swing.JTextField();
         jLabel4 = new javax.swing.JLabel();
-        txtCpf = new javax.swing.JTextField();
         jLabel5 = new javax.swing.JLabel();
-        txtEmail = new javax.swing.JTextField();
         jLabel6 = new javax.swing.JLabel();
-        txtPassword = new javax.swing.JTextField();
         btnEditar = new javax.swing.JButton();
         btnExcluir = new javax.swing.JButton();
         btnAtualizar = new javax.swing.JButton();
+        lblId = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         setBackground(new java.awt.Color(204, 204, 204));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        txtName.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                txtNameActionPerformed(evt);
+            }
+        });
+        getContentPane().add(txtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 340, 400, 40));
+        getContentPane().add(txtCpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 410, 400, 40));
+        getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 570, 400, 40));
+        getContentPane().add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 490, 400, 40));
 
         jLabel1.setBackground(new java.awt.Color(251, 176, 59));
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/User.png"))); // NOI18N
@@ -80,41 +112,40 @@ public class PerfilFrame extends javax.swing.JFrame {
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 0, 1100, 220));
 
-        jLabel2.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        jLabel2.setText("NOME DO USUÁRIO");
-        getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 230, -1, -1));
+        lblName.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        getContentPane().add(lblName, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 230, -1, -1));
 
         jLabel3.setText("Nome Completo");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 320, -1, -1));
 
-        txtName.addActionListener(new java.awt.event.ActionListener() {
-            public void actionPerformed(java.awt.event.ActionEvent evt) {
-                txtNameActionPerformed(evt);
-            }
-        });
-        getContentPane().add(txtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 340, 400, 40));
-
         jLabel4.setText("CPF");
         getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 390, -1, -1));
-        getContentPane().add(txtCpf, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 410, 400, 40));
 
         jLabel5.setText("Email");
         getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 470, -1, -1));
-        getContentPane().add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 490, 400, 40));
 
         jLabel6.setText("Senha");
         getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 550, -1, -1));
-        getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 570, 400, 40));
 
         btnEditar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnEditar.setText("Editar");
         btnEditar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        btnEditar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEditarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnEditar, new org.netbeans.lib.awtextra.AbsoluteConstraints(950, 270, 122, 40));
 
         btnExcluir.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnExcluir.setForeground(new java.awt.Color(255, 0, 0));
         btnExcluir.setText("Excluir");
         btnExcluir.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(255, 0, 0)));
+        btnExcluir.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnExcluirActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnExcluir, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 270, 122, 40));
 
         btnAtualizar.setBackground(new java.awt.Color(0, 147, 40));
@@ -122,7 +153,13 @@ public class PerfilFrame extends javax.swing.JFrame {
         btnAtualizar.setForeground(new java.awt.Color(255, 255, 255));
         btnAtualizar.setText("Salvar");
         btnAtualizar.setBorder(null);
+        btnAtualizar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnAtualizarActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnAtualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 640, 122, 40));
+        getContentPane().add(lblId, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 240, -1, -1));
 
         pack();
     }// </editor-fold>//GEN-END:initComponents
@@ -130,6 +167,107 @@ public class PerfilFrame extends javax.swing.JFrame {
     private void txtNameActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_txtNameActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_txtNameActionPerformed
+
+    private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
+
+        txtName.setEnabled(true);
+        txtEmail.setEnabled(true);
+        txtCpf.setEnabled(true);
+        txtPassword.setEnabled(true);
+        initComponents();
+    }//GEN-LAST:event_btnEditarActionPerformed
+
+    private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
+
+        int id = Integer.parseInt(lblId.getText());
+        
+        //lblName.setText(cpf);
+        
+        Aluno aluno = new Aluno();
+        Professor professor = new Professor();
+        ConnectionFactory connection = new ConnectionFactory();
+        PreparedStatement pstmt = null;
+        PreparedStatement pstmtProf = null;
+        
+        try(Connection c = connection.conexao()){
+           
+            pstmt = c.prepareStatement("SELECT * FROM tb_aluno");
+            ResultSet result = pstmt.executeQuery();
+            pstmtProf = c.prepareStatement("SELECT * FROM tb_professor");
+            ResultSet result2 = pstmtProf.executeQuery();
+            
+            while(result.next()){
+                int compareId= result.getInt("idAluno");
+                if(id == compareId){
+                    aluno.deleteAluno(id);
+                    System.out.println("Deu bom");
+                }
+                
+                
+            }
+            
+            while(result2.next()){
+                int compareId= result.getInt("idProfessor");
+                if(id == compareId){
+                    professor.deleteProfessor(id);
+                    System.out.println("Deu bom");
+                }
+                
+            }
+             
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+        
+    }//GEN-LAST:event_btnExcluirActionPerformed
+
+    private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
+        
+        int id = 6;
+        String nome = txtName.getText();
+        String email = txtEmail.getText();
+        String cpf = txtCpf.getText();
+        String senha = txtPassword.getText();
+        
+        Aluno aluno = new Aluno();
+        Professor professor = new Professor();
+        ConnectionFactory connection = new ConnectionFactory();
+        PreparedStatement pstmt = null;
+        PreparedStatement pstmtProf = null;
+        
+        
+        try(Connection c = connection.conexao()){
+           
+            pstmt = c.prepareStatement("SELECT * FROM tb_aluno");
+            ResultSet result = pstmt.executeQuery();
+            pstmtProf = c.prepareStatement("SELECT * FROM tb_professor");
+            ResultSet result2 = pstmtProf.executeQuery();
+            
+            while(result.next()){
+                int compareId= result.getInt("idAluno");
+                if(id == compareId){
+                    aluno.updateAluno(nome, email, cpf, senha, id);
+                    System.out.println("Deu bom");
+                }
+                
+                
+            }
+            
+            while(result2.next()){
+                int compareId= result.getInt("idProfessor");
+                if(id == compareId){
+                    professor.deleteProfessor(id);
+                    System.out.println("Deu bom");
+                }
+                
+            }
+             
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+            initComponents();
+        
+    }//GEN-LAST:event_btnAtualizarActionPerformed
 
     /**
      * @param args the command line arguments
@@ -165,13 +303,14 @@ public class PerfilFrame extends javax.swing.JFrame {
             }
         });
     }
+    
+    
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAtualizar;
     private javax.swing.JButton btnEditar;
     private javax.swing.JButton btnExcluir;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
     private javax.swing.JLabel jLabel5;
@@ -180,6 +319,8 @@ public class PerfilFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel8;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
+    private javax.swing.JLabel lblId;
+    private javax.swing.JLabel lblName;
     private javax.swing.JTextField txtCpf;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JTextField txtName;
