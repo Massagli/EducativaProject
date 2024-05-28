@@ -1,6 +1,9 @@
 
 package com.mycompany.educativaproject;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
 
 public class Documento {
     private String tituloDocumento, tipoDocumento, linkDocumento;
@@ -36,6 +39,22 @@ public class Documento {
     }
     
     
+    
+    //-------------------
+    
+    
+    public void registerDocumento(){
+        ConnectionFactory connection = new ConnectionFactory();
+        PreparedStatement pstmt=null;
+        try (Connection c = connection.conexao()) {
+                pstmt=c.prepareStatement("Insert into tb_documento (tituloDocumento, linkDocumento) values (?,?)");
+                pstmt.setString(1, tituloDocumento);
+                pstmt.setString(2, linkDocumento);
+                pstmt.execute();
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+    }
     
     
     

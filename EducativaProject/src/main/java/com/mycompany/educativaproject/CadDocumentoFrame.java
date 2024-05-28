@@ -90,27 +90,21 @@ public class CadDocumentoFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnMoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoveActionPerformed
-        // TODO add your handling code here:
-        String titulo = txtTitulo.getText();
-        String link = txtLink.getText();
-        ConnectionFactory connection = new ConnectionFactory();
-        PreparedStatement pstmt=null;
-        
-        if (!link.isEmpty() && !titulo.isEmpty()){
-            try (Connection c = connection.conexao()) {
-                pstmt=c.prepareStatement("Insert into tb_documento (tituloDocumento, linkDocumento) values (?,?)");
-                pstmt.setString(1, titulo);
-                pstmt.setString(2, link);
-                pstmt.execute();
-            } catch (Exception e){
-                e.printStackTrace();
-            }
-        } else {
-            JOptionPane.showMessageDialog(null, "Documento inválido!!");    
-                }
+        Documento documento = new Documento();
         CursosProfFrame cursosProfFrame = new CursosProfFrame();
-        this.dispose();
-        cursosProfFrame.setVisible(true);
+        documento.setTituloDocumento(txtTitulo.getText());
+        documento.setLinkDocumento(txtLink.getText());
+        
+        
+        if (!txtTitulo.getText().isEmpty() && !txtLink.getText().isEmpty()){
+            documento.registerDocumento();
+            this.dispose();
+            cursosProfFrame.setVisible(true);
+        } else {
+            JOptionPane.showMessageDialog(null, "Campo título ou campo link invalido");    
+        }
+        
+        
 
     }//GEN-LAST:event_btnMoveActionPerformed
 
