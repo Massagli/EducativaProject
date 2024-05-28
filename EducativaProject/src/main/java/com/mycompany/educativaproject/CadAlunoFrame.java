@@ -130,32 +130,25 @@ public class CadAlunoFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoveActionPerformed
-        LoginFrame aluno = new LoginFrame();
-        ConnectionFactory connection = new ConnectionFactory();
-        PreparedStatement pstmt = null;
+        LoginFrame alunoFrame = new LoginFrame();
+        Aluno aluno = new Aluno();
+        aluno.setNomeAluno(txtName.getText());
+        aluno.setCpfAluno(txtCpf.getText());
+        aluno.setEmailAluno(txtEmail.getText());
+        aluno.setIdadeAluno(Integer.parseInt(txtAge.getText()));
+        aluno.setSenhaAluno(new String(txtPassword.getPassword()));
         
-        try(Connection c = connection.conexao()){
-        pstmt = c.prepareStatement("Insert into tb_aluno(nomeAluno, cpfAluno, emailAluno, idadeAluno, senhaAluno) values (?,?,?,?,?)");    
-        pstmt.setString(1, txtName.getText());
-        pstmt.setString(2, txtCpf.getText());
-        pstmt.setString(3, txtEmail.getText());
-        pstmt.setInt(4, Integer.parseInt(txtAge.getText()));
-        pstmt.setString(5, new String(txtPassword.getPassword()));
-        String confSenha = new String(txtConfPassword.getPassword());
         
-        if(new String(txtPassword.getPassword()).equals(confSenha)){
-            pstmt.executeUpdate();      
-            aluno.setVisible(true);
+        if(new String(txtPassword.getPassword()).equals(new String(txtPassword.getPassword()))){
+            aluno.registerAluno();
             this.dispose();
+            alunoFrame.setVisible(true); 
         }else{
             JOptionPane.showMessageDialog(null, "As senhas não coincidem");
             
         }
-        }
         
-        catch (Exception e) {
-            e.printStackTrace();
-        }
+        
    
     }//GEN-LAST:event_btnMoveActionPerformed
 

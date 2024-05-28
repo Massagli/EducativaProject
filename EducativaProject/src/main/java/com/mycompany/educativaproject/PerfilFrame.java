@@ -241,10 +241,6 @@ public class PerfilFrame extends javax.swing.JFrame {
             }catch (Exception e){
                 e.printStackTrace();
             }
-        
-            JOptionPane.showMessageDialog(null, "Teste");
-        
-        
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed

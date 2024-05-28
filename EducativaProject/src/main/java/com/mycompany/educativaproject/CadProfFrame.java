@@ -146,32 +146,21 @@ public class CadProfFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnMoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoveActionPerformed
-        LoginFrame professor = new LoginFrame();
-        ConnectionFactory connection = new ConnectionFactory();
-        PreparedStatement pstmt = null;
-        
-        try(Connection c = connection.conexao()){
-        pstmt = c.prepareStatement("Insert into tb_professor(nomeProfessor, cpfProfessor, emailProfessor, formacaoProfessor, escolaridadeProfessor, senhaProfessor) values (?,?,?,?,?,?)");    
-        pstmt.setString(1, txtName.getText());
-        pstmt.setString(2, txtCpf.getText());
-        pstmt.setString(3, txtEmail.getText());
-        pstmt.setString(4, txtGrad.getText());
-        pstmt.setString(5, txtCourse.getText());
-        pstmt.setString(6, new String(txtPassword.getPassword()));
-        String confSenha = new String(txtConfPassword.getPassword());
-        
-        if(new String(txtPassword.getPassword()).equals(confSenha)){
-            pstmt.executeUpdate();      
-            professor.setVisible(true);
+        LoginFrame professorFrame = new LoginFrame();
+        Professor professor = new Professor();
+        professor.setNomeProfessor(txtName.getText());
+        professor.setCpfProfessor(txtCpf.getText());
+        professor.setEmailProfessor(txtEmail.getText());
+        professor.setEscolaridadeProfessor(txtGrad.getText());
+        professor.setFormacaoProfessor(txtCourse.getText());
+        professor.setSenhaProfessor(new String(txtPassword.getPassword()));
+        if(new String(txtPassword.getPassword()).equals(new String(txtConfPassword.getPassword()))){
+            professor.registerProfessor();
+            professorFrame.setVisible(true);
             this.dispose();
         }else{
             JOptionPane.showMessageDialog(null, "As senhas não coincidem");
             
-        }
-        }
-        
-        catch (Exception e) {
-            e.printStackTrace();
         }
     }//GEN-LAST:event_btnMoveActionPerformed
 

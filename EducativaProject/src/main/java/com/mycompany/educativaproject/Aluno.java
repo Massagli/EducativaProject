@@ -2,6 +2,7 @@ package com.mycompany.educativaproject;
 
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import javax.swing.JOptionPane;
 
 
 public class Aluno {
@@ -74,6 +75,26 @@ public class Aluno {
     
     
     //----------------------------
+    
+    public void registerAluno(){
+        ConnectionFactory connection = new ConnectionFactory();
+        PreparedStatement pstmt = null;
+        
+        try(Connection c = connection.conexao()){
+            pstmt = c.prepareStatement("Insert into tb_aluno(nomeAluno, cpfAluno, emailAluno, idadeAluno, senhaAluno) values (?,?,?,?,?)");    
+            pstmt.setString(1, nomeAluno);
+            pstmt.setString(2, cpfAluno);
+            pstmt.setString(3, emailAluno);
+            pstmt.setInt(4, idadeAluno);
+            pstmt.setString(5, senhaAluno);
+            pstmt.executeUpdate();      
+            
+        }
+        
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }
     
     
     public void deleteAluno(){
