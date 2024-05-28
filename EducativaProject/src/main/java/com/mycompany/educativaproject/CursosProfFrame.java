@@ -26,6 +26,7 @@ public class CursosProfFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        btnCadDoc = new javax.swing.JButton();
         btnPerfil = new javax.swing.JButton();
         btnCadCurso = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
@@ -37,10 +38,27 @@ public class CursosProfFrame extends javax.swing.JFrame {
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        btnCadDoc.setBackground(new java.awt.Color(47, 72, 88));
+        btnCadDoc.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
+        btnCadDoc.setForeground(new java.awt.Color(255, 255, 255));
+        btnCadDoc.setText("Cadastrar Documento");
+        btnCadDoc.setBorder(null);
+        btnCadDoc.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnCadDocActionPerformed(evt);
+            }
+        });
+        getContentPane().add(btnCadDoc, new org.netbeans.lib.awtextra.AbsoluteConstraints(630, 640, 150, 50));
+
         btnPerfil.setBackground(new java.awt.Color(251, 176, 59));
         btnPerfil.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnPerfil.setText("Perfil");
         btnPerfil.setBorder(null);
+        btnPerfil.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnPerfilActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnPerfil, new org.netbeans.lib.awtextra.AbsoluteConstraints(1110, 50, 80, 30));
 
         btnCadCurso.setBackground(new java.awt.Color(47, 72, 88));
@@ -53,7 +71,7 @@ public class CursosProfFrame extends javax.swing.JFrame {
                 btnCadCursoActionPerformed(evt);
             }
         });
-        getContentPane().add(btnCadCurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(570, 650, 122, 40));
+        getContentPane().add(btnCadCurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 640, 150, 50));
 
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
@@ -86,8 +104,20 @@ public class CursosProfFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnCadCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadCursoActionPerformed
-        // TODO add your handling code here:
+        CadCursoFrame cursoFrame = new CadCursoFrame();
+        this.dispose();
+        cursoFrame.setVisible(true);
     }//GEN-LAST:event_btnCadCursoActionPerformed
+
+    private void btnCadDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadDocActionPerformed
+        CadDocumentoFrame documentoFrame = new CadDocumentoFrame();
+        this.dispose();
+        documentoFrame.setVisible(true);
+    }//GEN-LAST:event_btnCadDocActionPerformed
+
+    private void btnPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfilActionPerformed
+        
+    }//GEN-LAST:event_btnPerfilActionPerformed
 
     /**
      * @param args the command line arguments
@@ -126,6 +156,7 @@ public class CursosProfFrame extends javax.swing.JFrame {
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnCadCurso;
+    private javax.swing.JButton btnCadDoc;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnPerfil;
     private javax.swing.JButton btnUpdate;

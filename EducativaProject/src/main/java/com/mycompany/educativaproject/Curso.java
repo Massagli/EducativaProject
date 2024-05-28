@@ -1,14 +1,14 @@
 
 package com.mycompany.educativaproject;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+
 public class Curso {
     private String tituloCurso, descricaoCurso, categoriaCurso, areaEnsinoCurso;
     private int duracaoCurso;
     private boolean certificadoCurso, avaliacaoCurso;
 
-    /**
-     * @return the tituloCurso
-     */
     public String getTituloCurso() {
         return tituloCurso;
     }
@@ -16,9 +16,7 @@ public class Curso {
         this.tituloCurso = tituloCurso;
     }
 
-    /**
-     * @return the descricaoCurso
-     */
+
     public String getDescricaoCurso() {
         return descricaoCurso;
     }
@@ -26,9 +24,7 @@ public class Curso {
         this.descricaoCurso = descricaoCurso;
     }
 
-    /**
-     * @return the categoriaCurso
-     */
+
     public String getCategoriaCurso() {
         return categoriaCurso;
     }
@@ -36,9 +32,7 @@ public class Curso {
         this.categoriaCurso = categoriaCurso;
     }
 
-    /**
-     * @return the areaEnsinoCurso
-     */
+
     public String getAreaEnsinoCurso() {
         return areaEnsinoCurso;
     }
@@ -46,9 +40,7 @@ public class Curso {
         this.areaEnsinoCurso = areaEnsinoCurso;
     }
 
-    /**
-     * @return the duracaoCurso
-     */
+
     public int getDuracaoCurso() {
         return duracaoCurso;
     }
@@ -60,6 +52,61 @@ public class Curso {
     
     
     
+    
+    
+    //--------------------
+    
+    
+    
+    
+    public void registerCurso(){
+        ConnectionFactory connection = new ConnectionFactory();
+        PreparedStatement pstmt = null;
+        
+        try(Connection c = connection.conexao()){
+            pstmt = c.prepareStatement("INSERT INTO tb_curso(tituloCurso, descCurso, duracaoCurso, categoriaCurso, areaEnsinoCurso, certificado, avaliacao) VALUES (?, ?, ?, ?, ?, ?, ?)");
+            pstmt.setString(1, tituloCurso);
+            pstmt.setString(2, descricaoCurso);
+            pstmt.setInt(3, duracaoCurso);
+            pstmt.setString(4, categoriaCurso);
+            pstmt.setString(5, areaEnsinoCurso);
+            pstmt.setBoolean(6, certificadoCurso);
+            pstmt.setBoolean(7, avaliacaoCurso);
+            
+            pstmt.executeUpdate();
+                
+        }catch(Exception e){
+           e.printStackTrace();     
+        }
+    }
+
+    /**
+     * @return the certificadoCurso
+     */
+    public boolean isCertificadoCurso() {
+        return certificadoCurso;
+    }
+
+    /**
+     * @param certificadoCurso the certificadoCurso to set
+     */
+    public void setCertificadoCurso(boolean certificadoCurso) {
+        this.certificadoCurso = certificadoCurso;
+    }
+
+    /**
+     * @return the avaliacaoCurso
+     */
+    public boolean isAvaliacaoCurso() {
+        return avaliacaoCurso;
+    }
+
+    /**
+     * @param avaliacaoCurso the avaliacaoCurso to set
+     */
+    public void setAvaliacaoCurso(boolean avaliacaoCurso) {
+        this.avaliacaoCurso = avaliacaoCurso;
+    }
     
     
     

@@ -125,44 +125,30 @@ public class CadCursoFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPcSimActionPerformed
 
     private void btnMoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoveActionPerformed
-        CursosProfFrame CC1 = new CursosProfFrame();
-        ConnectionFactory connection = new ConnectionFactory();
-        PreparedStatement pstmt = null;
+        CursosProfFrame cursoProfFrame = new CursosProfFrame();
+        Curso curso = new Curso(); 
         
-        try(Connection c = connection.conexao()){
-            pstmt = c.prepareStatement("INSERT INTO tb_curso(tituloCurso, descCurso, duracaoCurso, categoriaCurso, areaEnsinoCurso, certificado, avaliacao) VALUES (?, ?, ?, ?, ?, ?, ?)");
-            pstmt.setString(1, txtTitle.getText());
-            pstmt.setString(2, txtDesc.getText());
-            pstmt.setString(3, txtTime.getText());
-            pstmt.setString(4, txtCatego.getText());
-            pstmt.setString(5, txtArea.getText());
-            
-            if(btnPcSim.isSelected()){
-                pstmt.setBoolean(6, true);
-                
-            }
-            if(btnPcNao.isSelected()){
-                pstmt.setBoolean(6, false);
-                
-            }
-           
-            if(btnPaSim.isSelected()){
-                pstmt.setBoolean(7, true);
-            }
-            if(btnPaNao.isSelected()){
-                pstmt.setBoolean(7, false);
-            }
-            
-            
-             
-            pstmt.executeUpdate();
-                
-        }catch(Exception e){
-           e.printStackTrace();     
+        curso.setTituloCurso(txtTitle.getText());
+        curso.setDescricaoCurso(txtDesc.getText());
+        curso.setDuracaoCurso(Integer.parseInt(txtTime.getText()));
+        curso.setCategoriaCurso(txtCatego.getText());
+        curso.setAreaEnsinoCurso(txtArea.getText());
+        
+        if(btnPcSim.isSelected()){
+            curso.setCertificadoCurso(true);    
         }
-        this.dispose();
-            
-        CC1.setVisible(true);   
+        if(btnPcNao.isSelected()){
+            curso.setCertificadoCurso(false);                
+        }
+           
+        if(btnPaSim.isSelected()){
+            curso.setAvaliacaoCurso(true);
+        }
+        if(btnPaNao.isSelected()){
+            curso.setAvaliacaoCurso(false);
+        }
+        
+        curso.registerCurso();
     }//GEN-LAST:event_btnMoveActionPerformed
 
     /**
