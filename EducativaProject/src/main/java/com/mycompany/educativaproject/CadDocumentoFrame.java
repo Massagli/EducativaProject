@@ -86,7 +86,9 @@ public class CadDocumentoFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
-        // TODO add your handling code here:
+        CursosProfFrame cursosFrame = new CursosProfFrame();
+        this.dispose();
+        cursosFrame.setVisible(true);
     }//GEN-LAST:event_btnBackActionPerformed
 
     private void btnMoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoveActionPerformed
