@@ -1,6 +1,8 @@
 create database db_educativa;
 use db_educativa;
+drop database db_educativa;
 
+/*Script Tabela Aluno*/
 create table tb_aluno(
 	idAluno int auto_increment not null primary key,
     nomeAluno varchar(50) not null,
@@ -12,24 +14,15 @@ create table tb_aluno(
 insert into tb_aluno (nomeAluno, cpfAluno, emailAluno, idadeAluno, senhaAluno) VALUES ('Adriel', '11111111111', 'adriel@gmail.com', 18, '1234');
 insert into tb_aluno (nomeAluno, cpfAluno, emailAluno, idadeAluno, senhaAluno) VALUES ('Guilherme', '22222222222', 'guilherme@gmail.com', 18, '4321');
 select * from tb_aluno;
+/*-----------------------*/
 
-create table tb_curso(
-	idCurso int auto_increment not null primary key,
-    tituloCurso varchar(50) not null,
-    descCurso varchar(1000) not null,
-    duracaoCurso int not null,
-    areaEnsinoCurso varchar(20),
-    certificado boolean not null,
-    avaliacao boolean not null
-);
-insert into tb_curso (tituloCurso, descCurso, duracaoCurso, areaEnsinoCurso, certificado, avaliacao) VALUES ('JAVASCRIPT', 'muito legal esse curso', 40, 'front-end', true, true);
-insert into tb_curso (tituloCurso, descCurso, duracaoCurso, areaEnsinoCurso, certificado, avaliacao) VALUES ('JAVA', 'muito chato esse curso', 80, 'back-end', true, true);
-insert into tb_curso (tituloCurso, descCurso, duracaoCurso, areaEnsinoCurso, certificado, avaliacao) VALUES ('MYSQL', 'curso introdução ao mysql', 30, 'banco de dados', true, true);
-select * from tb_curso;
 
+
+
+/*Script Tabela Professor*/
 create table tb_professor(
 	idProfessor int auto_increment not null primary key,
-	nomeProf varchar(50) not null,
+	nomeProfessor varchar(50) not null,
     cpfProfessor char(11) not null,
     emailProfessor varchar(50) not null,
     formacaoProfessor varchar(50) not null,
@@ -38,14 +31,46 @@ create table tb_professor(
 );
 insert into tb_professor (nomeProfessor, cpfProfessor, emailProfessor, formacaoProfessor, escolaridadeProfessor, senhaProfessor) VALUES ('Endildo', '333333333', 'enildo@gmail.com', 'ADS', 'tecnologo', '1234');
 select * from tb_professor;
-drop table tb_professor;
+/*------------------------*/
 
+
+
+/*Script Tabela Curso*/
+create table tb_curso(
+	idCurso int auto_increment not null primary key,
+    tituloCurso varchar(50) not null,
+    descCurso varchar(1000) not null,
+    duracaoCurso int not null,
+    categoriaCurso varchar(50) not null,
+    areaEnsinoCurso varchar(20),
+    certificado boolean not null,
+    avaliacao boolean not null
+);
+insert into tb_curso (tituloCurso, descCurso, duracaoCurso, categoriaCurso, areaEnsinoCurso, certificado, avaliacao) VALUES ('JAVASCRIPT', 'muito legal esse curso', 40, 'Programação', 'front-end', true, true);
+insert into tb_curso (tituloCurso, descCurso, duracaoCurso, categoriaCurso, areaEnsinoCurso, certificado, avaliacao) VALUES ('JAVA', 'muito chato esse curso', 80, 'Programação', 'back-end', true, true);
+insert into tb_curso (tituloCurso, descCurso, duracaoCurso, categoriaCurso, areaEnsinoCurso, certificado, avaliacao) VALUES ('MYSQL', 'curso introdução ao mysql', 30, 'Programação', 'banco de dados', true, true);
+select * from tb_curso;
+/*------------------------------*/
+
+
+
+
+
+
+
+/*Script Tabela Documento*/
 create table tb_documento(
 	idDocumento int auto_increment not null primary key,
     tituloDocumento varchar(50) not null,
     linkDocumento varchar(300) not null
 );
+select * from tb_documento;
+/*-------------------------*/
 
+
+
+
+/*Script Tabelas Adicionais
 create table tb_curso_documento(
 	id_curso int,
     id_documento int,
@@ -61,12 +86,6 @@ create table tb_curso_aluno(
     foreign key (id_curso) references tb_curso(idCurso),
     foreign key (id_aluno) references tb_aluno(idAluno)
 );
-drop table tb_curso_aluno;
-
-
-
-
-
 
 insert into tb_curso_aluno (id_curso, id_aluno) VALUES (2, 1);
 insert into tb_curso_aluno (id_curso, id_aluno) VALUES (1, 2);
@@ -77,3 +96,23 @@ select tituloCurso from tb_curso inner join tb_curso_aluno on tb_curso.idCurso =
 select nomeAluno from tb_Aluno inner join tb_curso_aluno on tb_aluno.idAluno = tb_curso_aluno.id_aluno where tb_curso_aluno.id_curso = 2;
 
 SELECT COUNT(*) FROM tb_aluno;
+-----------------*/
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+select nomeAluno from tb_aluno where idAluno=7;
