@@ -4,6 +4,10 @@
  */
 package com.mycompany.educativaproject;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author adrie
@@ -126,9 +130,32 @@ public class CadAlunoFrame extends javax.swing.JFrame {
     }// </editor-fold>//GEN-END:initComponents
 
     private void btnMoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoveActionPerformed
-        Aluno aluno = new Aluno();
-        aluno.setNomeAluno(txtName.getText());
+        LoginFrame aluno = new LoginFrame();
+        ConnectionFactory connection = new ConnectionFactory();
+        PreparedStatement pstmt = null;
         
+        try(Connection c = connection.conexao()){
+        pstmt = c.prepareStatement("Insert into tb_aluno(nomeAluno, cpfAluno, emailAluno, idadeAluno, senhaAluno) values (?,?,?,?,?)");    
+        pstmt.setString(1, txtName.getText());
+        pstmt.setString(2, txtCpf.getText());
+        pstmt.setString(3, txtEmail.getText());
+        pstmt.setInt(4, Integer.parseInt(txtAge.getText()));
+        pstmt.setString(5, new String(txtPassword.getPassword()));
+        String confSenha = new String(txtConfPassword.getPassword());
+        
+        if(new String(txtPassword.getPassword()).equals(confSenha)){
+            pstmt.executeUpdate();      
+            aluno.setVisible(true);
+            this.dispose();
+        }else{
+            JOptionPane.showMessageDialog(null, "As senhas não coincidem");
+            
+        }
+        }
+        
+        catch (Exception e) {
+            e.printStackTrace();
+        }
    
     }//GEN-LAST:event_btnMoveActionPerformed
 

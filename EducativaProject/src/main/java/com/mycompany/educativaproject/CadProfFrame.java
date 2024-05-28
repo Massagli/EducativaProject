@@ -4,6 +4,10 @@
  */
 package com.mycompany.educativaproject;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author adrie
@@ -84,6 +88,11 @@ public class CadProfFrame extends javax.swing.JFrame {
         btnMove.setForeground(new java.awt.Color(255, 255, 255));
         btnMove.setText("Avançar");
         btnMove.setBorder(null);
+        btnMove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMoveActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnMove, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 630, 122, 40));
         getContentPane().add(txtConfPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(110, 570, 400, 40));
 
@@ -135,6 +144,36 @@ public class CadProfFrame extends javax.swing.JFrame {
         this.dispose();
         loginFrame.setVisible(true);
     }//GEN-LAST:event_btnBackActionPerformed
+
+    private void btnMoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoveActionPerformed
+        LoginFrame professor = new LoginFrame();
+        ConnectionFactory connection = new ConnectionFactory();
+        PreparedStatement pstmt = null;
+        
+        try(Connection c = connection.conexao()){
+        pstmt = c.prepareStatement("Insert into tb_professor(nomeProfessor, cpfProfessor, emailProfessor, formacaoProfessor, escolaridadeProfessor, senhaProfessor) values (?,?,?,?,?,?)");    
+        pstmt.setString(1, txtName.getText());
+        pstmt.setString(2, txtCpf.getText());
+        pstmt.setString(3, txtEmail.getText());
+        pstmt.setString(4, txtGrad.getText());
+        pstmt.setString(5, txtCourse.getText());
+        pstmt.setString(6, new String(txtPassword.getPassword()));
+        String confSenha = new String(txtConfPassword.getPassword());
+        
+        if(new String(txtPassword.getPassword()).equals(confSenha)){
+            pstmt.executeUpdate();      
+            professor.setVisible(true);
+            this.dispose();
+        }else{
+            JOptionPane.showMessageDialog(null, "As senhas não coincidem");
+            
+        }
+        }
+        
+        catch (Exception e) {
+            e.printStackTrace();
+        }
+    }//GEN-LAST:event_btnMoveActionPerformed
 
     /**
      * @param args the command line arguments

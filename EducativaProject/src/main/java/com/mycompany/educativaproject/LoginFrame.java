@@ -122,7 +122,7 @@ public class LoginFrame extends javax.swing.JFrame {
                 String senha2 = result2.getString("senhaProfessor");
                 if(email2.equals(txtEmail.getText()) && senha2.equals(new String(txtPassword.getPassword()))){
                     this.dispose();
-                    perfil.moveParam(result2.getString("nomeProf"), result2.getString("emailProfessor"), result2.getString("cpfProfessor"), result2.getString("senhaProfessor"), result2.getInt("idProfessor"));
+                    perfil.moveParam(result2.getString("nomeProfessor"), result2.getString("emailProfessor"), result2.getString("cpfProfessor"), result2.getString("senhaProfessor"), result2.getInt("idProfessor"));
                     perfil.setVisible(true);
                 }
             }
