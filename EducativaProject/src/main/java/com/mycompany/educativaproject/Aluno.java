@@ -6,7 +6,7 @@ import java.sql.PreparedStatement;
 
 public class Aluno {
    private String nomeAluno,cpfAluno,emailAluno,senhaAluno;
-   private int idadeAluno;
+   private int idadeAluno, idAluno;
 
     /**
      * @return the nomeAluno
@@ -60,16 +60,28 @@ public class Aluno {
     
     
     
+    /**
+     * @return the idadeAluno
+     */
+    public int getIdAluno() {
+        return idAluno;
+    }
+    public void setIdAluno(int idAluno) {
+        this.idAluno = idAluno;
+    }
+    
+    
+    
     
     //----------------------------
     
     
-    public void deleteAluno(int id){
+    public void deleteAluno(){
         ConnectionFactory connection = new ConnectionFactory();
         
         try(Connection c = connection.conexao()){
             PreparedStatement pstmt = c.prepareStatement("DELETE FROM tb_aluno WHERE idAluno = ?");
-            pstmt.setInt(1,id);
+            pstmt.setInt(1,idAluno);
             pstmt.execute();
         }catch(Exception e){
             e.printStackTrace();

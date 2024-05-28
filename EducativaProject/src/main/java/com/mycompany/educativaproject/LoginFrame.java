@@ -136,7 +136,7 @@ public class LoginFrame extends javax.swing.JFrame {
                 
             }
             
-            JOptionPane.showMessageDialog(null, "Campo email ou senha inválidos");
+            //JOptionPane.showMessageDialog(null, "Campo email ou senha inválidos");
             
             }catch (Exception e){
                 e.printStackTrace();

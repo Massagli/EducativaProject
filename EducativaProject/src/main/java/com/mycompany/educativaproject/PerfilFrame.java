@@ -114,7 +114,6 @@ public class PerfilFrame extends javax.swing.JFrame {
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 0, 1100, 220));
 
         lblName.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
-        lblName.setText("Adriel");
         getContentPane().add(lblName, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 240, -1, -1));
 
         jLabel3.setText("Nome Completo");
@@ -163,7 +162,6 @@ public class PerfilFrame extends javax.swing.JFrame {
         getContentPane().add(btnAtualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 640, 122, 40));
 
         lblId.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
-        lblId.setText("5");
         lblId.setToolTipText("");
         getContentPane().add(lblId, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 240, -1, -1));
 
@@ -176,19 +174,25 @@ public class PerfilFrame extends javax.swing.JFrame {
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
         
-        txtName.setEnabled(true);
+        txtName.setEnabled(false);
         txtEmail.setEnabled(true);
         txtCpf.setEnabled(true);
         txtPassword.setEnabled(true);
     }//GEN-LAST:event_btnEditarActionPerformed
+    
 
+        
+
+    
+    
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
-
+        
         int id = Integer.parseInt(lblId.getText());
         String nome = lblName.getText();
         CadAlunoFrame alunoFrame = new CadAlunoFrame();
         CadProfFrame profFrame = new CadProfFrame();
         Aluno aluno = new Aluno();
+        aluno.setIdAluno(Integer.parseInt(lblId.getText()));
         Professor professor = new Professor();
         ConnectionFactory connection = new ConnectionFactory();
         PreparedStatement pstmt = null;
@@ -205,9 +209,9 @@ public class PerfilFrame extends javax.swing.JFrame {
                 int compareId= result.getInt("idAluno");
                 String compareName = result.getString("nomeAluno");
                 if(id == compareId && nome.equals(compareName)){
-                    int jp = JOptionPane.showConfirmDialog(null,"Tem certeza que deseja escluir seu perfil?", "Confirme Exclusão", JOptionPane.YES_NO_OPTION);
+                    int jp = JOptionPane.showConfirmDialog(null,"Tem certeza que deseja excluir seu perfil?", "Confirme Exclusão", JOptionPane.YES_NO_OPTION);
                     if(jp == JOptionPane.YES_OPTION){
-                        aluno.deleteAluno(id);
+                        aluno.deleteAluno();
                         System.out.println("Deu bom");
                         this.dispose();
                         alunoFrame.setVisible(true);
@@ -222,7 +226,7 @@ public class PerfilFrame extends javax.swing.JFrame {
                 int compareId= result2.getInt("idProfessor");
                 String compareName = result2.getString("nomeProfessor");
                 if(id == compareId && nome.equals(compareName)){
-                    int jp = JOptionPane.showConfirmDialog(null,"Tem certeza que deseja escluir seu perfil?", "Confirme Exclusão", JOptionPane.YES_NO_OPTION);
+                    int jp = JOptionPane.showConfirmDialog(null,"Tem certeza que deseja excluir seu perfil?", "Confirme Exclusão", JOptionPane.YES_NO_OPTION);
                     if(jp == JOptionPane.YES_OPTION){
                         professor.deleteProfessor(id);
                         System.out.println("Deu bom");
@@ -237,6 +241,8 @@ public class PerfilFrame extends javax.swing.JFrame {
             }catch (Exception e){
                 e.printStackTrace();
             }
+        
+            JOptionPane.showMessageDialog(null, "Teste");
         
         
     }//GEN-LAST:event_btnExcluirActionPerformed
@@ -266,14 +272,12 @@ public class PerfilFrame extends javax.swing.JFrame {
                 String compareName = result.getString("nomeAluno");
                 if(id == compareId && nome.equals(compareName)){
                     aluno.updateAluno(txtName.getText(), txtEmail.getText(), txtCpf.getText(), txtPassword.getText(), id);
+                    lblName.setText(result.getString("nomeAluno"));
                     System.out.println("Deu bom");
                     txtName.setEnabled(false);
                     txtEmail.setEnabled(false);
                     txtCpf.setEnabled(false);
-                    txtPassword.setEnabled(false);  
-                    btnEditar.setEnabled(true);
-                    btnExcluir.setEnabled(true);
-                    btnAtualizar.setEnabled(true);
+                    txtPassword.setEnabled(false);
                 } 
             }
             
@@ -282,11 +286,12 @@ public class PerfilFrame extends javax.swing.JFrame {
                 String compareName = result2.getString("nomeProfessor");
                 if(id == compareId && nome.equals(compareName)){
                     professor.updateProfessor(txtName.getText(), txtEmail.getText(), txtCpf.getText(), txtPassword.getText(), id);
+                    lblName.setText(result.getString("nomeProfessor"));
                     System.out.println("Deu bom");
                     txtName.setEnabled(false);
                     txtEmail.setEnabled(false);
                     txtCpf.setEnabled(false);
-                    txtPassword.setEnabled(false);  
+                    txtPassword.setEnabled(false);
                 } 
             }
              
