@@ -8,6 +8,7 @@ import java.awt.Color;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 
 /**
  *
@@ -112,8 +113,9 @@ public class PerfilFrame extends javax.swing.JFrame {
 
         getContentPane().add(jPanel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(180, 0, 1100, 220));
 
-        lblName.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
-        getContentPane().add(lblName, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 230, -1, -1));
+        lblName.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
+        lblName.setText("Adriel");
+        getContentPane().add(lblName, new org.netbeans.lib.awtextra.AbsoluteConstraints(360, 240, -1, -1));
 
         jLabel3.setText("Nome Completo");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(240, 320, -1, -1));
@@ -160,7 +162,9 @@ public class PerfilFrame extends javax.swing.JFrame {
         });
         getContentPane().add(btnAtualizar, new org.netbeans.lib.awtextra.AbsoluteConstraints(1120, 640, 122, 40));
 
-        lblId.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lblId.setFont(new java.awt.Font("Segoe UI", 1, 28)); // NOI18N
+        lblId.setText("5");
+        lblId.setToolTipText("");
         getContentPane().add(lblId, new org.netbeans.lib.awtextra.AbsoluteConstraints(310, 240, -1, -1));
 
         pack();
@@ -171,20 +175,19 @@ public class PerfilFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_txtNameActionPerformed
 
     private void btnEditarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEditarActionPerformed
-
+        
         txtName.setEnabled(true);
         txtEmail.setEnabled(true);
         txtCpf.setEnabled(true);
         txtPassword.setEnabled(true);
-        initComponents();
     }//GEN-LAST:event_btnEditarActionPerformed
 
     private void btnExcluirActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnExcluirActionPerformed
 
         int id = Integer.parseInt(lblId.getText());
-        
-        //lblName.setText(cpf);
-        
+        String nome = lblName.getText();
+        CadAlunoFrame alunoFrame = new CadAlunoFrame();
+        CadProfFrame profFrame = new CadProfFrame();
         Aluno aluno = new Aluno();
         Professor professor = new Professor();
         ConnectionFactory connection = new ConnectionFactory();
@@ -200,19 +203,33 @@ public class PerfilFrame extends javax.swing.JFrame {
             
             while(result.next()){
                 int compareId= result.getInt("idAluno");
-                if(id == compareId){
-                    aluno.deleteAluno(id);
-                    System.out.println("Deu bom");
+                String compareName = result.getString("nomeAluno");
+                if(id == compareId && nome.equals(compareName)){
+                    int jp = JOptionPane.showConfirmDialog(null,"Tem certeza que deseja escluir seu perfil?", "Confirme Exclusão", JOptionPane.YES_NO_OPTION);
+                    if(jp == JOptionPane.YES_OPTION){
+                        aluno.deleteAluno(id);
+                        System.out.println("Deu bom");
+                        this.dispose();
+                        alunoFrame.setVisible(true);
+                    }   
+
                 }
                 
                 
             }
             
             while(result2.next()){
-                int compareId= result.getInt("idProfessor");
-                if(id == compareId){
-                    professor.deleteProfessor(id);
-                    System.out.println("Deu bom");
+                int compareId= result2.getInt("idProfessor");
+                String compareName = result2.getString("nomeProfessor");
+                if(id == compareId && nome.equals(compareName)){
+                    int jp = JOptionPane.showConfirmDialog(null,"Tem certeza que deseja escluir seu perfil?", "Confirme Exclusão", JOptionPane.YES_NO_OPTION);
+                    if(jp == JOptionPane.YES_OPTION){
+                        professor.deleteProfessor(id);
+                        System.out.println("Deu bom");
+                        this.dispose();
+                        profFrame.setVisible(true);
+                    }  
+                    
                 }
                 
             }
@@ -220,16 +237,15 @@ public class PerfilFrame extends javax.swing.JFrame {
             }catch (Exception e){
                 e.printStackTrace();
             }
+        
         
     }//GEN-LAST:event_btnExcluirActionPerformed
 
     private void btnAtualizarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnAtualizarActionPerformed
         
-        int id = 6;
-        String nome = txtName.getText();
-        String email = txtEmail.getText();
-        String cpf = txtCpf.getText();
-        String senha = txtPassword.getText();
+        int id = Integer.parseInt(lblId.getText());
+        String nome = lblName.getText();
+
         
         Aluno aluno = new Aluno();
         Professor professor = new Professor();
@@ -247,27 +263,37 @@ public class PerfilFrame extends javax.swing.JFrame {
             
             while(result.next()){
                 int compareId= result.getInt("idAluno");
-                if(id == compareId){
-                    aluno.updateAluno(nome, email, cpf, senha, id);
+                String compareName = result.getString("nomeAluno");
+                if(id == compareId && nome.equals(compareName)){
+                    aluno.updateAluno(txtName.getText(), txtEmail.getText(), txtCpf.getText(), txtPassword.getText(), id);
                     System.out.println("Deu bom");
-                }
-                
-                
+                    txtName.setEnabled(false);
+                    txtEmail.setEnabled(false);
+                    txtCpf.setEnabled(false);
+                    txtPassword.setEnabled(false);  
+                    btnEditar.setEnabled(true);
+                    btnExcluir.setEnabled(true);
+                    btnAtualizar.setEnabled(true);
+                } 
             }
             
             while(result2.next()){
-                int compareId= result.getInt("idProfessor");
-                if(id == compareId){
-                    professor.deleteProfessor(id);
+                int compareId= result2.getInt("idProfessor");
+                String compareName = result2.getString("nomeProfessor");
+                if(id == compareId && nome.equals(compareName)){
+                    professor.updateProfessor(txtName.getText(), txtEmail.getText(), txtCpf.getText(), txtPassword.getText(), id);
                     System.out.println("Deu bom");
-                }
-                
+                    txtName.setEnabled(false);
+                    txtEmail.setEnabled(false);
+                    txtCpf.setEnabled(false);
+                    txtPassword.setEnabled(false);  
+                } 
             }
              
             }catch (Exception e){
                 e.printStackTrace();
             }
-            initComponents();
+        
         
     }//GEN-LAST:event_btnAtualizarActionPerformed
 

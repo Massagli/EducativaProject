@@ -32,6 +32,8 @@ public class LoginFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        jLabel6 = new javax.swing.JLabel();
+        jLabel5 = new javax.swing.JLabel();
         btnLogin = new javax.swing.JButton();
         jLabel4 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -44,6 +46,12 @@ public class LoginFrame extends javax.swing.JFrame {
         setMaximizedBounds(new java.awt.Rectangle(0, 0, 800, 800));
         setSize(new java.awt.Dimension(800, 800));
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
+
+        jLabel6.setText("Senha");
+        getContentPane().add(jLabel6, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 370, -1, -1));
+
+        jLabel5.setText("Email");
+        getContentPane().add(jLabel5, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 300, -1, -1));
 
         btnLogin.setBackground(new java.awt.Color(47, 72, 88));
         btnLogin.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -66,15 +74,15 @@ public class LoginFrame extends javax.swing.JFrame {
                 jLabel4MouseClicked(evt);
             }
         });
-        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(730, 430, -1, -1));
+        getContentPane().add(jLabel4, new org.netbeans.lib.awtextra.AbsoluteConstraints(740, 430, -1, -1));
 
         jLabel3.setText("Esqueci minha senha");
-        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(460, 430, -1, -1));
-        getContentPane().add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 330, 340, 40));
+        getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 430, -1, -1));
+        getContentPane().add(txtEmail, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 320, 340, 40));
         getContentPane().add(txtPassword, new org.netbeans.lib.awtextra.AbsoluteConstraints(450, 390, 340, 40));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/LogoEducativa.png"))); // NOI18N
-        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 160, -1, -1));
+        getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(510, 140, -1, -1));
 
         jLabel2.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/Login.jpg"))); // NOI18N
         jLabel2.setText("jLabel2");
@@ -95,7 +103,7 @@ public class LoginFrame extends javax.swing.JFrame {
         //cria variavel que carrega os valores da caixa de texto
         String senhaTest = new String(txtPassword.getPassword());
         
-        if(emailTest != null && senhaTest != null){
+        if(!emailTest.isEmpty() && !senhaTest.isEmpty()){
             //recebe a conexão
             try(Connection c = connection.conexao()){
            
@@ -125,15 +133,21 @@ public class LoginFrame extends javax.swing.JFrame {
                     perfil.moveParam(result2.getString("nomeProfessor"), result2.getString("emailProfessor"), result2.getString("cpfProfessor"), result2.getString("senhaProfessor"), result2.getInt("idProfessor"));
                     perfil.setVisible(true);
                 }
+                
             }
-             
+            
+            JOptionPane.showMessageDialog(null, "Campo email ou senha inválidos");
+            
             }catch (Exception e){
                 e.printStackTrace();
             }
             
             
             
+        }else{
+            JOptionPane.showMessageDialog(null, "Campo email ou senha não preenchido");
         }
+        
 
         
 
@@ -192,6 +206,8 @@ public class LoginFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel2;
     private javax.swing.JLabel jLabel3;
     private javax.swing.JLabel jLabel4;
+    private javax.swing.JLabel jLabel5;
+    private javax.swing.JLabel jLabel6;
     private javax.swing.JTextField txtEmail;
     private javax.swing.JPasswordField txtPassword;
     // End of variables declaration//GEN-END:variables

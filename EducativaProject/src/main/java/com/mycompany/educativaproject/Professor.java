@@ -89,6 +89,22 @@ public class Professor {
     }
     
     
+    public void updateProfessor(String nome, String email, String cpf, String senha, int id){
+       ConnectionFactory connection = new ConnectionFactory();
+       try(Connection c = connection.conexao()){
+            PreparedStatement pstmt = c.prepareStatement("UPDATE tb_professor SET nomeProfessor = ?, emailProfessor = ?, cpfProfessor = ?, senhaProfessor = ? WHERE idProfessor = ?");
+            pstmt.setString(1, nome);
+            pstmt.setString(2, email);
+            pstmt.setString(3, cpf);
+            pstmt.setString(4, senha);
+            pstmt.setInt(5,id);
+            pstmt.executeUpdate();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
+       
+   }
+    
     
     
     

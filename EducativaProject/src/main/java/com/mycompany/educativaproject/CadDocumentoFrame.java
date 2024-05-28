@@ -4,6 +4,10 @@
  */
 package com.mycompany.educativaproject;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author adrie
@@ -55,6 +59,11 @@ public class CadDocumentoFrame extends javax.swing.JFrame {
         btnMove.setForeground(new java.awt.Color(255, 255, 255));
         btnMove.setText("Avançar");
         btnMove.setBorder(null);
+        btnMove.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnMoveActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnMove, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 490, 122, 40));
         getContentPane().add(txtLink, new org.netbeans.lib.awtextra.AbsoluteConstraints(370, 410, 440, 40));
 
@@ -79,6 +88,31 @@ public class CadDocumentoFrame extends javax.swing.JFrame {
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         // TODO add your handling code here:
     }//GEN-LAST:event_btnBackActionPerformed
+
+    private void btnMoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoveActionPerformed
+        // TODO add your handling code here:
+        String titulo = txtTitulo.getText();
+        String link = txtLink.getText();
+        ConnectionFactory connection = new ConnectionFactory();
+        PreparedStatement pstmt=null;
+        
+        if (!link.isEmpty() && !titulo.isEmpty()){
+            try (Connection c = connection.conexao()) {
+                pstmt=c.prepareStatement("Insert into tb_documento (tituloDocumento, linkDocumento) values (?,?)");
+                pstmt.setString(1, titulo);
+                pstmt.setString(2, link);
+                pstmt.execute();
+            } catch (Exception e){
+                e.printStackTrace();
+            }
+        } else {
+            JOptionPane.showMessageDialog(null, "Documento inválido!!");    
+                }
+        CursosProfFrame cursosProfFrame = new CursosProfFrame();
+        this.dispose();
+        cursosProfFrame.setVisible(true);
+
+    }//GEN-LAST:event_btnMoveActionPerformed
 
     /**
      * @param args the command line arguments
