@@ -4,17 +4,28 @@
  */
 package com.mycompany.educativaproject;
 
+import java.sql.Connection;
+import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
+
 /**
  *
  * @author adrie
  */
 public class CursosProfFrame extends javax.swing.JFrame {
-
+    String nomeProf;
+    int idProf;
     /**
      * Creates new form CursosProfFrame
      */
     public CursosProfFrame() {
         initComponents();
+    }
+    
+    public void moveParam(String nome, int id){
+        this.nomeProf = nome;
+        this.idProf = id;
     }
 
     /**
@@ -116,7 +127,33 @@ public class CursosProfFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnCadDocActionPerformed
 
     private void btnPerfilActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnPerfilActionPerformed
+
+        PerfilFrame perfil = new PerfilFrame();
+        ConnectionFactory connection = new ConnectionFactory();
+        PreparedStatement pstmtProf = null;
         
+           
+        try(Connection c = connection.conexao()){
+           
+            pstmtProf = c.prepareStatement("SELECT * FROM tb_professor");
+            ResultSet result2 = pstmtProf.executeQuery();
+            
+            while(result2.next()){
+                String nome = result2.getString("nomeProfessor");
+                int id = result2.getInt("idProfessor");
+                if(idProf == id && nome.equals(nomeProf)){
+                    this.dispose();
+                    perfil.moveParam(result2.getString("nomeProfessor"), result2.getString("emailProfessor"), result2.getString("cpfProfessor"), result2.getString("senhaProfessor"), result2.getInt("idProfessor"));
+                    perfil.setVisible(true);
+                }
+                
+            }
+            
+            //JOptionPane.showMessageDialog(null, "Campo email ou senha inválidos");
+            
+        }catch (Exception e){
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_btnPerfilActionPerformed
 
     /**

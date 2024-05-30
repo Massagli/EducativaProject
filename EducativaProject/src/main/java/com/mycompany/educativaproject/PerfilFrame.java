@@ -94,6 +94,11 @@ public class PerfilFrame extends javax.swing.JFrame {
         jLabel8.setFont(new java.awt.Font("Segoe UI", 0, 18)); // NOI18N
         jLabel8.setForeground(new java.awt.Color(47, 72, 88));
         jLabel8.setText("HOME");
+        jLabel8.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mouseClicked(java.awt.event.MouseEvent evt) {
+                jLabel8MouseClicked(evt);
+            }
+        });
         jPanel1.add(jLabel8, new org.netbeans.lib.awtextra.AbsoluteConstraints(60, 210, -1, -1));
 
         getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, 180, 720));
@@ -130,7 +135,7 @@ public class PerfilFrame extends javax.swing.JFrame {
 
         btnEditar.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnEditar.setText("Editar");
-        btnEditar.setBorder(javax.swing.BorderFactory.createLineBorder(new java.awt.Color(0, 0, 0)));
+        btnEditar.setBorder(javax.swing.BorderFactory.createLineBorder(null));
         btnEditar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnEditarActionPerformed(evt);
@@ -297,6 +302,53 @@ public class PerfilFrame extends javax.swing.JFrame {
         
         
     }//GEN-LAST:event_btnAtualizarActionPerformed
+
+    private void jLabel8MouseClicked(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_jLabel8MouseClicked
+        int id = Integer.parseInt(lblId.getText());
+        String nome = lblName.getText();
+        CadAlunoFrame alunoFrame = new CadAlunoFrame();
+        CadProfFrame profFrame = new CadProfFrame();
+        Aluno aluno = new Aluno();
+        CursosProfFrame cursosFrame = new CursosProfFrame();
+        aluno.setIdAluno(Integer.parseInt(lblId.getText()));
+        Professor professor = new Professor();
+        ConnectionFactory connection = new ConnectionFactory();
+        PreparedStatement pstmt = null;
+        PreparedStatement pstmtProf = null;
+        
+        try(Connection c = connection.conexao()){
+           
+            pstmt = c.prepareStatement("SELECT * FROM tb_aluno");
+            ResultSet result = pstmt.executeQuery();
+            pstmtProf = c.prepareStatement("SELECT * FROM tb_professor");
+            ResultSet result2 = pstmtProf.executeQuery();
+            
+            while(result.next()){
+                int compareId= result.getInt("idAluno");
+                String compareName = result.getString("nomeAluno");
+                if(id == compareId && nome.equals(compareName)){
+                    JOptionPane.showMessageDialog(null, "Funcionalidade disponível em breve");
+
+                }
+                
+                
+            }
+            
+            while(result2.next()){
+                int compareId = result2.getInt("idProfessor");
+                String compareName = result2.getString("nomeProfessor");
+                if(id == compareId && nome.equals(compareName)){
+                    cursosFrame.moveParam(compareName, compareId);
+                    this.dispose();
+                    cursosFrame.setVisible(true);
+                }
+                
+            }
+             
+            }catch (Exception e){
+                e.printStackTrace();
+            }
+    }//GEN-LAST:event_jLabel8MouseClicked
 
     /**
      * @param args the command line arguments
