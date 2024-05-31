@@ -110,6 +110,9 @@ public class CadDocumentoFrame extends javax.swing.JFrame {
             documento.registerDocumento();
             this.dispose();
             cursosProfFrame.setVisible(true);
+            JOptionPane.showMessageDialog(null, "Documento Cadastrado com sucesso!");
+            txtLink.setText("");
+            txtTitulo.setText("");
         } else {
             JOptionPane.showMessageDialog(null, "Campo título ou campo link invalido");    
         }

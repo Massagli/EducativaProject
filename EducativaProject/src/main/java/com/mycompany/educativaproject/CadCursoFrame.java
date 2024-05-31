@@ -148,6 +148,7 @@ public class CadCursoFrame extends javax.swing.JFrame {
     }//GEN-LAST:event_btnPcSimActionPerformed
 
     private void btnMoveActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnMoveActionPerformed
+        if (!txtArea.getText().isEmpty() && !txtCatego.getText().isEmpty() && !txtDesc.getText().isEmpty() && !txtTitle.getText().isEmpty() && !txtTime.getText().isEmpty()){
         CursosProfFrame cursoProfFrame = new CursosProfFrame();
         Curso curso = new Curso(); 
         
@@ -177,20 +178,29 @@ public class CadCursoFrame extends javax.swing.JFrame {
         ConnectionFactory connection = new ConnectionFactory();
         PreparedStatement pstmt = null;
         
-        try(Connection c = connection.conexao()){
-            pstmt = c.prepareStatement("SELECT MAX(idCurso) FROM tb_Curso");
-            ResultSet result = pstmt.executeQuery();
-            
-            if (result.next()) {
-                int maxIdCurso = result.getInt(1);
-                CallableStatement cs = c.prepareCall("{call sp_CursoProfessor(?,?)}");
-                cs.setInt(1, maxIdCurso);
-                cs.setInt(2, idProf);
-                cs.execute();
+            try(Connection c = connection.conexao()){
+                pstmt = c.prepareStatement("SELECT MAX(idCurso) FROM tb_Curso");
+                ResultSet result = pstmt.executeQuery();
+
+                if (result.next()) {
+                    int maxIdCurso = result.getInt(1);
+                    CallableStatement cs = c.prepareCall("{call sp_CursoProfessor(?,?)}");
+                    cs.setInt(1, maxIdCurso);
+                    cs.setInt(2, idProf);
+                    cs.execute();
+                    JOptionPane.showMessageDialog(null, "Curso Cadastrado com sucesso!");
+                    txtArea.setText("");
+                    txtCatego.setText("");
+                    txtDesc.setText("");
+                    txtTime.setText("");
+                    txtTitle.setText("");
+                }
+
+            }catch(Exception e){
+                e.printStackTrace();
             }
-            
-        }catch(Exception e){
-            e.printStackTrace();
+        }else{
+            JOptionPane.showMessageDialog(null, "Preencha todos os campos para prosseguir!");
         }
     }//GEN-LAST:event_btnMoveActionPerformed
 
