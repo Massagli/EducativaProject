@@ -7,6 +7,7 @@ package com.mycompany.educativaproject;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
+import javax.swing.DefaultListModel;
 import javax.swing.JOptionPane;
 
 /**
@@ -21,6 +22,21 @@ public class CursosProfFrame extends javax.swing.JFrame {
      */
     public CursosProfFrame() {
         initComponents();
+        ResultSet result = null;
+        PreparedStatement pstmt;
+        DefaultListModel <String> model = new DefaultListModel<>();
+        ConnectionFactory connection = new ConnectionFactory();
+        try (Connection c = connection.conexao()){
+            pstmt = c.prepareStatement("SELECT * FROM tb_curso");
+            result = pstmt.executeQuery();
+            while(result.next()){
+               model.addElement(result.getString("tituloCurso"));
+            }
+            System.out.println(model);
+        } catch(Exception e){
+            e.printStackTrace();
+        }
+        jListCurso.setModel(model);
     }
     
     public void moveParam(String nome, int id){
@@ -37,12 +53,15 @@ public class CursosProfFrame extends javax.swing.JFrame {
     // <editor-fold defaultstate="collapsed" desc="Generated Code">//GEN-BEGIN:initComponents
     private void initComponents() {
 
+        buttonGroup1 = new javax.swing.ButtonGroup();
         btnCadDoc = new javax.swing.JButton();
         btnPerfil = new javax.swing.JButton();
         btnCadCurso = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
         btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
+        jScrollPane1 = new javax.swing.JScrollPane();
+        jListCurso = new javax.swing.JList<>();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
@@ -84,6 +103,7 @@ public class CursosProfFrame extends javax.swing.JFrame {
         });
         getContentPane().add(btnCadCurso, new org.netbeans.lib.awtextra.AbsoluteConstraints(470, 640, 150, 50));
 
+        jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
         btnUpdate.setBackground(new java.awt.Color(47, 72, 88));
@@ -98,9 +118,28 @@ public class CursosProfFrame extends javax.swing.JFrame {
         btnDelete.setForeground(new java.awt.Color(255, 255, 255));
         btnDelete.setText("Excluir");
         btnDelete.setBorder(null);
+        btnDelete.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnDeleteActionPerformed(evt);
+            }
+        });
         jPanel1.add(btnDelete, new org.netbeans.lib.awtextra.AbsoluteConstraints(970, 50, 122, 40));
 
-        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 120, 1120, 140));
+        jListCurso.setBorder(null);
+        jListCurso.setFont(new java.awt.Font("Segoe UI", 0, 36)); // NOI18N
+        jListCurso.setModel(new javax.swing.AbstractListModel<String>() {
+            String[] strings = { "Item 1", "Item 2", "Item 3", "Item 4", "Item 5" };
+            public int getSize() { return strings.length; }
+            public String getElementAt(int i) { return strings[i]; }
+        });
+        jListCurso.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
+        jListCurso.setAutoscrolls(false);
+        jListCurso.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
+        jScrollPane1.setViewportView(jListCurso);
+
+        jPanel1.add(jScrollPane1, new org.netbeans.lib.awtextra.AbsoluteConstraints(30, 40, 490, 60));
+
+        getContentPane().add(jPanel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(90, 120, 1120, 140));
 
         jLabel2.setFont(new java.awt.Font("Segoe UI", 1, 48)); // NOI18N
         jLabel2.setForeground(new java.awt.Color(47, 72, 88));
@@ -108,7 +147,6 @@ public class CursosProfFrame extends javax.swing.JFrame {
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(70, 20, -1, -1));
 
         jLabel1.setIcon(new javax.swing.ImageIcon(getClass().getResource("/images/TelaCursosProf.jpg"))); // NOI18N
-        jLabel1.setText("jLabel1");
         getContentPane().add(jLabel1, new org.netbeans.lib.awtextra.AbsoluteConstraints(0, 0, -1, -1));
 
         pack();
@@ -116,6 +154,8 @@ public class CursosProfFrame extends javax.swing.JFrame {
 
     private void btnCadCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadCursoActionPerformed
         CadCursoFrame cursoFrame = new CadCursoFrame();
+        JOptionPane.showMessageDialog(null, nomeProf);
+        cursoFrame.moveParam(nomeProf, idProf);
         this.dispose();
         cursoFrame.setVisible(true);
     }//GEN-LAST:event_btnCadCursoActionPerformed
@@ -155,6 +195,20 @@ public class CursosProfFrame extends javax.swing.JFrame {
             e.printStackTrace();
         }
     }//GEN-LAST:event_btnPerfilActionPerformed
+
+    private void btnDeleteActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnDeleteActionPerformed
+        Curso curso = new Curso();
+        if(jListCurso.getSelectedValue() != null){
+            int jp = JOptionPane.showConfirmDialog(null,"Tem certeza que deseja excluir o curso?", "Confirme Exclusão", JOptionPane.YES_NO_OPTION);
+            if(jp == JOptionPane.YES_OPTION){
+                curso.setTituloCurso(jListCurso.getSelectedValue());
+                curso.deleteCurso();
+                new CursosProfFrame();
+            }     
+        }else{
+            JOptionPane.showMessageDialog(null,"Você não selecionou nenhuma opção. Tente novamente.");
+        }
+    }//GEN-LAST:event_btnDeleteActionPerformed
 
     /**
      * @param args the command line arguments
@@ -197,8 +251,11 @@ public class CursosProfFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnPerfil;
     private javax.swing.JButton btnUpdate;
+    private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
+    private javax.swing.JList<String> jListCurso;
     private javax.swing.JPanel jPanel1;
+    private javax.swing.JScrollPane jScrollPane1;
     // End of variables declaration//GEN-END:variables
 }

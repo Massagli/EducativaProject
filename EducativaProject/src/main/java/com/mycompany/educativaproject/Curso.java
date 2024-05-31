@@ -48,6 +48,34 @@ public class Curso {
         this.duracaoCurso = duracaoCurso;
     }
     
+    /**
+     * @return the certificadoCurso
+     */
+    public boolean isCertificadoCurso() {
+        return certificadoCurso;
+    }
+
+    /**
+     * @param certificadoCurso the certificadoCurso to set
+     */
+    public void setCertificadoCurso(boolean certificadoCurso) {
+        this.certificadoCurso = certificadoCurso;
+    }
+
+    /**
+     * @return the avaliacaoCurso
+     */
+    public boolean isAvaliacaoCurso() {
+        return avaliacaoCurso;
+    }
+
+    /**
+     * @param avaliacaoCurso the avaliacaoCurso to set
+     */
+    public void setAvaliacaoCurso(boolean avaliacaoCurso) {
+        this.avaliacaoCurso = avaliacaoCurso;
+    }
+    
     
     
     
@@ -80,32 +108,17 @@ public class Curso {
         }
     }
 
-    /**
-     * @return the certificadoCurso
-     */
-    public boolean isCertificadoCurso() {
-        return certificadoCurso;
-    }
-
-    /**
-     * @param certificadoCurso the certificadoCurso to set
-     */
-    public void setCertificadoCurso(boolean certificadoCurso) {
-        this.certificadoCurso = certificadoCurso;
-    }
-
-    /**
-     * @return the avaliacaoCurso
-     */
-    public boolean isAvaliacaoCurso() {
-        return avaliacaoCurso;
-    }
-
-    /**
-     * @param avaliacaoCurso the avaliacaoCurso to set
-     */
-    public void setAvaliacaoCurso(boolean avaliacaoCurso) {
-        this.avaliacaoCurso = avaliacaoCurso;
+    
+    public void deleteCurso(){
+        ConnectionFactory connection = new ConnectionFactory();
+        
+        try(Connection c = connection.conexao()){
+            PreparedStatement pstmt = c.prepareStatement("DELETE FROM tb_curso WHERE tituloCurso = ?");
+            pstmt.setString(1,tituloCurso);
+            pstmt.execute();
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }
     
     

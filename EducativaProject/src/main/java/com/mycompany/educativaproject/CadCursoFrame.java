@@ -1,12 +1,27 @@
 package com.mycompany.educativaproject;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
+import javax.swing.JOptionPane;
 
 public class CadCursoFrame extends javax.swing.JFrame {
+    
+    String nomeProf;
+    int idProf;
+    
+    
 
     public CadCursoFrame() {
         initComponents();
+        
+    }
+    
+    public void moveParam(String nome, int id){
+        this.nomeProf = nome;
+        this.idProf = id;
+        lblName.setText(nomeProf);
     }
 
     @SuppressWarnings("unchecked")
@@ -15,6 +30,7 @@ public class CadCursoFrame extends javax.swing.JFrame {
 
         buttonGroup1 = new javax.swing.ButtonGroup();
         buttonGroup2 = new javax.swing.ButtonGroup();
+        lblName = new javax.swing.JLabel();
         btnBack = new javax.swing.JButton();
         jLabel10 = new javax.swing.JLabel();
         btnMove = new javax.swing.JButton();
@@ -34,18 +50,26 @@ public class CadCursoFrame extends javax.swing.JFrame {
         jLabel4 = new javax.swing.JLabel();
         txtTitle = new javax.swing.JTextField();
         jLabel3 = new javax.swing.JLabel();
-        txtName = new javax.swing.JTextField();
         jLabel2 = new javax.swing.JLabel();
         jLabel1 = new javax.swing.JLabel();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
         getContentPane().setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
 
+        lblName.setFont(new java.awt.Font("Segoe UI", 0, 24)); // NOI18N
+        lblName.setText("jLabel11");
+        getContentPane().add(lblName, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 70, -1, -1));
+
         btnBack.setBackground(new java.awt.Color(147, 42, 42));
         btnBack.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
         btnBack.setForeground(new java.awt.Color(255, 255, 255));
         btnBack.setText("Voltar");
         btnBack.setBorder(null);
+        btnBack.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnBackActionPerformed(evt);
+            }
+        });
         getContentPane().add(btnBack, new org.netbeans.lib.awtextra.AbsoluteConstraints(880, 520, 122, 40));
 
         jLabel10.setFont(new java.awt.Font("Segoe UI", 1, 24)); // NOI18N
@@ -109,7 +133,6 @@ public class CadCursoFrame extends javax.swing.JFrame {
 
         jLabel3.setText("Titulo");
         getContentPane().add(jLabel3, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 150, -1, -1));
-        getContentPane().add(txtName, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 70, 360, 40));
 
         jLabel2.setText("Nome do Instrutor");
         getContentPane().add(jLabel2, new org.netbeans.lib.awtextra.AbsoluteConstraints(190, 50, -1, -1));
@@ -149,7 +172,36 @@ public class CadCursoFrame extends javax.swing.JFrame {
         }
         
         curso.registerCurso();
+        
+        
+        ConnectionFactory connection = new ConnectionFactory();
+        PreparedStatement pstmt = null;
+        
+        try(Connection c = connection.conexao()){
+            pstmt = c.prepareStatement("SELECT MAX(idCurso) FROM tb_Curso");
+            ResultSet result = pstmt.executeQuery();
+            
+            if (result.next()) {
+                int maxIdCurso = result.getInt(1);
+                JOptionPane.showMessageDialog(null, maxIdCurso);
+                JOptionPane.showMessageDialog(null, idProf);
+                CallableStatement cs = c.prepareCall("{call sp_CursoProfessor(?,?)}");
+                cs.setInt(1, maxIdCurso);
+                cs.setInt(2, idProf);
+                cs.execute();
+            }
+            
+        }catch(Exception e){
+            e.printStackTrace();
+        }
     }//GEN-LAST:event_btnMoveActionPerformed
+
+    private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
+        CursosProfFrame cursosFrame = new CursosProfFrame();
+        cursosFrame.moveParam(nomeProf, idProf);
+        this.dispose();
+        cursosFrame.setVisible(true);
+    }//GEN-LAST:event_btnBackActionPerformed
 
     /**
      * @param args the command line arguments
@@ -205,10 +257,10 @@ public class CadCursoFrame extends javax.swing.JFrame {
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
     private javax.swing.JLabel jLabel9;
+    private javax.swing.JLabel lblName;
     private javax.swing.JTextField txtArea;
     private javax.swing.JTextField txtCatego;
     private javax.swing.JTextField txtDesc;
-    private javax.swing.JTextField txtName;
     private javax.swing.JTextField txtTime;
     private javax.swing.JTextField txtTitle;
     // End of variables declaration//GEN-END:variables
