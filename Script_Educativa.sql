@@ -14,6 +14,7 @@ create table tb_aluno(
 insert into tb_aluno (nomeAluno, cpfAluno, emailAluno, idadeAluno, senhaAluno) VALUES ('Adriel', '11111111111', 'adriel@gmail.com', 18, '1234');
 insert into tb_aluno (nomeAluno, cpfAluno, emailAluno, idadeAluno, senhaAluno) VALUES ('Guilherme', '22222222222', 'guilherme@gmail.com', 18, '4321');
 select * from tb_aluno;
+SELECT MAX(idAluno) FROM tb_aluno;
 /*-----------------------*/
 
 
@@ -45,7 +46,7 @@ create table tb_curso(
     areaEnsinoCurso varchar(20),
     certificado boolean not null,
     avaliacao boolean not null
-);
+	);
 insert into tb_curso (tituloCurso, descCurso, duracaoCurso, categoriaCurso, areaEnsinoCurso, certificado, avaliacao) VALUES ('JAVASCRIPT', 'muito legal esse curso', 40, 'Programação', 'front-end', true, true);
 insert into tb_curso (tituloCurso, descCurso, duracaoCurso, categoriaCurso, areaEnsinoCurso, certificado, avaliacao) VALUES ('JAVA', 'muito chato esse curso', 80, 'Programação', 'back-end', true, true);
 insert into tb_curso (tituloCurso, descCurso, duracaoCurso, categoriaCurso, areaEnsinoCurso, certificado, avaliacao) VALUES ('MYSQL', 'curso introdução ao mysql', 30, 'Programação', 'banco de dados', true, true);
@@ -69,6 +70,45 @@ select * from tb_documento;
 
 
 
+/*Tabela Curso Professor*/
+create table tb_curso_professor(
+	id_curso int, 
+    id_professor int, 
+    primary key (id_curso, id_professor),
+    foreign key (id_curso) references tb_curso(idCurso),
+    foreign key (id_professor) references tb_professor(idProfessor)
+);
+select * from tb_curso_professor;
+/*----------------------*/
+
+
+
+
+/*Procedure para pegar os cursos dos professor*/
+delimiter $$
+create procedure sp_GetCursos (vIdProfessor int)
+begin
+	select tituloCurso from tb_curso inner join tb_curso_professor on tb_curso.idCurso = tb_curso_professor.id_curso where tb_curso_professor.id_professor = vIdProfessor;
+end$$
+/**/
+
+
+/*Procedures para conectar o professor com os cursos*/
+delimiter $$
+create procedure sp_CursoProfessor (vIdCurso int, vIdProfessor int)
+begin
+	insert into tb_curso_professor values (vIdCurso, vIdProfessor);
+end$$
+/**/
+
+
+
+
+
+
+
+
+
 
 /*Script Tabelas Adicionais
 create table tb_curso_documento(
@@ -87,32 +127,16 @@ create table tb_curso_aluno(
     foreign key (id_aluno) references tb_aluno(idAluno)
 );
 
+
+select tituloCurso from tb_curso inner join tb_curso_aluno on tb_curso.idCurso = tb_curso_aluno.id_curso where tb_curso_aluno.id_aluno = 1;
+select nomeAluno from tb_Aluno inner join tb_curso_aluno on tb_aluno.idAluno = tb_curso_aluno.id_aluno where tb_curso_aluno.id_curso = 2;
+
 insert into tb_curso_aluno (id_curso, id_aluno) VALUES (2, 1);
 insert into tb_curso_aluno (id_curso, id_aluno) VALUES (1, 2);
 select * from tb_curso_aluno;
 
-select tituloCurso from tb_curso inner join tb_curso_aluno on tb_curso.idCurso = tb_curso_aluno.id_curso where tb_curso_aluno.id_aluno = 1;
-
-select nomeAluno from tb_Aluno inner join tb_curso_aluno on tb_aluno.idAluno = tb_curso_aluno.id_aluno where tb_curso_aluno.id_curso = 2;
 
 SELECT COUNT(*) FROM tb_aluno;
 -----------------*/
 
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-select nomeAluno from tb_aluno where idAluno=7;
