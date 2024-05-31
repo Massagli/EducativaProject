@@ -183,8 +183,6 @@ public class CadCursoFrame extends javax.swing.JFrame {
             
             if (result.next()) {
                 int maxIdCurso = result.getInt(1);
-                JOptionPane.showMessageDialog(null, maxIdCurso);
-                JOptionPane.showMessageDialog(null, idProf);
                 CallableStatement cs = c.prepareCall("{call sp_CursoProfessor(?,?)}");
                 cs.setInt(1, maxIdCurso);
                 cs.setInt(2, idProf);
@@ -199,6 +197,7 @@ public class CadCursoFrame extends javax.swing.JFrame {
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         CursosProfFrame cursosFrame = new CursosProfFrame();
         cursosFrame.moveParam(nomeProf, idProf);
+        cursosFrame.showCursos();
         this.dispose();
         cursosFrame.setVisible(true);
     }//GEN-LAST:event_btnBackActionPerformed

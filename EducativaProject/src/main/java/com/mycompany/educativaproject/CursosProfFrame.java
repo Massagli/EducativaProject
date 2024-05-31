@@ -4,6 +4,7 @@
  */
 package com.mycompany.educativaproject;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
@@ -22,21 +23,25 @@ public class CursosProfFrame extends javax.swing.JFrame {
      */
     public CursosProfFrame() {
         initComponents();
+        
+    }
+    
+    public void showCursos(){
         ResultSet result = null;
-        PreparedStatement pstmt;
         DefaultListModel <String> model = new DefaultListModel<>();
         ConnectionFactory connection = new ConnectionFactory();
         try (Connection c = connection.conexao()){
-            pstmt = c.prepareStatement("SELECT * FROM tb_curso");
-            result = pstmt.executeQuery();
+            CallableStatement cs = c.prepareCall("{call sp_GetCursos(?)}");
+            cs.setInt(1, idProf);
+            result = cs.executeQuery();
             while(result.next()){
-               model.addElement(result.getString("tituloCurso"));
+                String curso = result.getString("tituloCurso");
+                model.addElement(curso);
             }
-            System.out.println(model);
+            jListCurso.setModel(model);
         } catch(Exception e){
             e.printStackTrace();
         }
-        jListCurso.setModel(model);
     }
     
     public void moveParam(String nome, int id){
@@ -132,7 +137,6 @@ public class CursosProfFrame extends javax.swing.JFrame {
             public int getSize() { return strings.length; }
             public String getElementAt(int i) { return strings[i]; }
         });
-        jListCurso.setSelectionMode(javax.swing.ListSelectionModel.SINGLE_SELECTION);
         jListCurso.setAutoscrolls(false);
         jListCurso.setCursor(new java.awt.Cursor(java.awt.Cursor.HAND_CURSOR));
         jScrollPane1.setViewportView(jListCurso);
@@ -154,14 +158,15 @@ public class CursosProfFrame extends javax.swing.JFrame {
 
     private void btnCadCursoActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadCursoActionPerformed
         CadCursoFrame cursoFrame = new CadCursoFrame();
-        JOptionPane.showMessageDialog(null, nomeProf);
         cursoFrame.moveParam(nomeProf, idProf);
         this.dispose();
         cursoFrame.setVisible(true);
+        
     }//GEN-LAST:event_btnCadCursoActionPerformed
 
     private void btnCadDocActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnCadDocActionPerformed
         CadDocumentoFrame documentoFrame = new CadDocumentoFrame();
+        documentoFrame.moveParam(nomeProf, idProf);
         this.dispose();
         documentoFrame.setVisible(true);
     }//GEN-LAST:event_btnCadDocActionPerformed
@@ -203,7 +208,7 @@ public class CursosProfFrame extends javax.swing.JFrame {
             if(jp == JOptionPane.YES_OPTION){
                 curso.setTituloCurso(jListCurso.getSelectedValue());
                 curso.deleteCurso();
-                new CursosProfFrame();
+                this.showCursos();
             }     
         }else{
             JOptionPane.showMessageDialog(null,"Você não selecionou nenhuma opção. Tente novamente.");

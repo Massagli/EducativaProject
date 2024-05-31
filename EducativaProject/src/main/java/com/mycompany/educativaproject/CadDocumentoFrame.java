@@ -13,12 +13,18 @@ import javax.swing.JOptionPane;
  * @author adrie
  */
 public class CadDocumentoFrame extends javax.swing.JFrame {
-
+    String nomeProf;
+    int idProf;
     /**
      * Creates new form CadDocumentoFrame
      */
     public CadDocumentoFrame() {
         initComponents();
+    }
+    
+    public void moveParam(String nome, int id){
+        this.nomeProf = nome;
+        this.idProf = id;
     }
 
     /**
@@ -87,6 +93,8 @@ public class CadDocumentoFrame extends javax.swing.JFrame {
 
     private void btnBackActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBackActionPerformed
         CursosProfFrame cursosFrame = new CursosProfFrame();
+        cursosFrame.moveParam(nomeProf,idProf);
+        cursosFrame.showCursos();
         this.dispose();
         cursosFrame.setVisible(true);
     }//GEN-LAST:event_btnBackActionPerformed

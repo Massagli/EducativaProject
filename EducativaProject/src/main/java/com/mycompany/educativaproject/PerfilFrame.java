@@ -287,7 +287,7 @@ public class PerfilFrame extends javax.swing.JFrame {
                 String compareName = result2.getString("nomeProfessor");
                 if(id == compareId && nome.equals(compareName)){
                     professor.updateProfessor(txtName.getText(), txtEmail.getText(), txtCpf.getText(), txtPassword.getText(), id);
-                    lblName.setText(result.getString("nomeProfessor"));
+                    lblName.setText(result2.getString("nomeProfessor"));
                     System.out.println("Deu bom");
                     txtName.setEnabled(false);
                     txtEmail.setEnabled(false);
@@ -339,6 +339,7 @@ public class PerfilFrame extends javax.swing.JFrame {
                 String compareName = result2.getString("nomeProfessor");
                 if(id == compareId && nome.equals(compareName)){
                     cursosFrame.moveParam(compareName, compareId);
+                    cursosFrame.showCursos();
                     this.dispose();
                     cursosFrame.setVisible(true);
                 }
