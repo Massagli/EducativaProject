@@ -14,13 +14,18 @@ import javax.swing.JOptionPane;
  * @author adrie
  */
 public class LoginFrame extends javax.swing.JFrame {
-
+    int tentativas = 3;
     /**
      * Creates new form LoginFrame
      */
     public LoginFrame() {
         initComponents();
         setExtendedState(500);
+    }
+    
+    public String qtdTentativas(){
+        tentativas--;
+        return "Senha incorreta! Tentativas restantes: " + tentativas;
     }
 
     /**
@@ -102,45 +107,61 @@ public class LoginFrame extends javax.swing.JFrame {
         String emailTest = txtEmail.getText(); 
         //cria variavel que carrega os valores da caixa de texto
         String senhaTest = new String(txtPassword.getPassword());
+        boolean usuarioEncontrado = false;
         
         if(!emailTest.isEmpty() && !senhaTest.isEmpty()){
-            //recebe a conexão
-            try(Connection c = connection.conexao()){
+            
+            if(tentativas > 0){
+                try(Connection c = connection.conexao()){
            
-            pstmt = c.prepareStatement("SELECT * FROM tb_aluno");
-            ResultSet result = pstmt.executeQuery();
-            pstmtProf = c.prepareStatement("SELECT * FROM tb_professor");
-            ResultSet result2 = pstmtProf.executeQuery();
-            
-            
-            
-            while(result.next()){
-                String email = result.getString("emailAluno");
-                String senha = result.getString("senhaAluno");
-                if(email.equals(txtEmail.getText()) && senha.equals(new String(txtPassword.getPassword()))){ 
-                    this.dispose();
-                    perfil.moveParam(result.getString("nomeAluno"), result.getString("emailAluno"), result.getString("cpfAluno"), result.getString("senhaAluno"), result.getInt("idAluno"));
-                    perfil.setVisible(true);
+                pstmt = c.prepareStatement("SELECT * FROM tb_aluno");
+                ResultSet result = pstmt.executeQuery();
+                pstmtProf = c.prepareStatement("SELECT * FROM tb_professor");
+                ResultSet result2 = pstmtProf.executeQuery();
+                
+
+
+
+                while(result.next()){
+                    String email = result.getString("emailAluno");
+                    String senha = result.getString("senhaAluno");
+                    if(email.equals(txtEmail.getText()) && senha.equals(new String(txtPassword.getPassword()))){ 
+                        this.dispose();
+                        perfil.moveParam(result.getString("nomeAluno"), result.getString("emailAluno"), result.getString("cpfAluno"), result.getString("senhaAluno"), result.getInt("idAluno"));
+                        perfil.setVisible(true);
+                        usuarioEncontrado = true;
+                    }
+
+                }
+
+                if(result2.next()){
+                    String email2 = result2.getString("emailProfessor");
+                    String senha2 = result2.getString("senhaProfessor");
+                    if(email2.equals(txtEmail.getText()) && senha2.equals(new String(txtPassword.getPassword()))){
+                        this.dispose();
+                        perfil.moveParam(result2.getString("nomeProfessor"), result2.getString("emailProfessor"), result2.getString("cpfProfessor"), result2.getString("senhaProfessor"), result2.getInt("idProfessor"));
+                        perfil.setVisible(true);
+                        usuarioEncontrado = true;
+                    }
+                }
+
+                //JOptionPane.showMessageDialog(null, "Campo email ou senha inválidos");
+
+                }catch (Exception e){
+                    e.printStackTrace();
                 }
                 
-            }
-            
-            while(result2.next()){
-                String email2 = result2.getString("emailProfessor");
-                String senha2 = result2.getString("senhaProfessor");
-                if(email2.equals(txtEmail.getText()) && senha2.equals(new String(txtPassword.getPassword()))){
-                    this.dispose();
-                    perfil.moveParam(result2.getString("nomeProfessor"), result2.getString("emailProfessor"), result2.getString("cpfProfessor"), result2.getString("senhaProfessor"), result2.getInt("idProfessor"));
-                    perfil.setVisible(true);
+                if(usuarioEncontrado == false){
+                    JOptionPane.showMessageDialog(null, this.qtdTentativas());
                 }
                 
+                
+                
+            }else{
+                JOptionPane.showMessageDialog(null, "Tente novamente mais tarde");
             }
+
             
-            //JOptionPane.showMessageDialog(null, "Campo email ou senha inválidos");
-            
-            }catch (Exception e){
-                e.printStackTrace();
-            }
             
             
             

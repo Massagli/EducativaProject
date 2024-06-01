@@ -63,7 +63,6 @@ public class CursosProfFrame extends javax.swing.JFrame {
         btnPerfil = new javax.swing.JButton();
         btnCadCurso = new javax.swing.JButton();
         jPanel1 = new javax.swing.JPanel();
-        btnUpdate = new javax.swing.JButton();
         btnDelete = new javax.swing.JButton();
         jScrollPane1 = new javax.swing.JScrollPane();
         jListCurso = new javax.swing.JList<>();
@@ -110,13 +109,6 @@ public class CursosProfFrame extends javax.swing.JFrame {
 
         jPanel1.setBackground(new java.awt.Color(255, 255, 255));
         jPanel1.setLayout(new org.netbeans.lib.awtextra.AbsoluteLayout());
-
-        btnUpdate.setBackground(new java.awt.Color(47, 72, 88));
-        btnUpdate.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
-        btnUpdate.setForeground(new java.awt.Color(255, 255, 255));
-        btnUpdate.setText("Atualizar");
-        btnUpdate.setBorder(null);
-        jPanel1.add(btnUpdate, new org.netbeans.lib.awtextra.AbsoluteConstraints(810, 50, 122, 40));
 
         btnDelete.setBackground(new java.awt.Color(147, 42, 42));
         btnDelete.setFont(new java.awt.Font("Segoe UI", 1, 12)); // NOI18N
@@ -255,7 +247,6 @@ public class CursosProfFrame extends javax.swing.JFrame {
     private javax.swing.JButton btnCadDoc;
     private javax.swing.JButton btnDelete;
     private javax.swing.JButton btnPerfil;
-    private javax.swing.JButton btnUpdate;
     private javax.swing.ButtonGroup buttonGroup1;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel2;
