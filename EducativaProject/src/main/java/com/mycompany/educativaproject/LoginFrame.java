@@ -134,7 +134,7 @@ public class LoginFrame extends javax.swing.JFrame {
 
                 }
 
-                if(result2.next()){
+                while(result2.next()){
                     String email2 = result2.getString("emailProfessor");
                     String senha2 = result2.getString("senhaProfessor");
                     if(email2.equals(txtEmail.getText()) && senha2.equals(new String(txtPassword.getPassword()))){

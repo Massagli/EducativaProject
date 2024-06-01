@@ -1,8 +1,10 @@
 
 package com.mycompany.educativaproject;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import javax.swing.JOptionPane;
 
 
@@ -104,9 +106,19 @@ public class Professor {
         ConnectionFactory connection = new ConnectionFactory();
         
         try(Connection c = connection.conexao()){
-            PreparedStatement pstmt = c.prepareStatement("DELETE FROM tb_professor WHERE idProfessor = ?");
-            pstmt.setInt(1, id);
-            pstmt.execute();
+            PreparedStatement pstmt = c.prepareStatement("SELECT * FROM tb_professor");
+            ResultSet result = pstmt.executeQuery();
+            
+            while(result.next()){
+                int idCompare = result.getInt("idProfessor");
+                if(idCompare == id){
+                    CallableStatement cs = c.prepareCall("{Call sp_ExcluirProfessor(?)}");
+                    cs.setInt(1,id);
+                    cs.execute();
+                }
+            }
+            
+            
         }catch(Exception e){
             e.printStackTrace();
         }

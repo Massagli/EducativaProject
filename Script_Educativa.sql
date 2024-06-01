@@ -53,7 +53,8 @@ insert into tb_curso (tituloCurso, descCurso, duracaoCurso, categoriaCurso, area
 select * from tb_curso;
 /*------------------------------*/
 
-
+delete from tb_curso where idCurso = 15;
+delete from tb_curso_professor where id_curso = 15;
 
 
 
@@ -102,6 +103,25 @@ end$$
 /**/
 
 
+
+/*Procedure para excluir curso*/
+delimiter $$
+create procedure sp_ExcluirCurso (vIdCurso int)
+begin
+	delete from tb_curso_professor where id_curso = vIdCurso;
+	delete from tb_curso where idCurso = vIdCurso;
+end$$
+/**/
+
+
+/*Procedure para exluir professor*/
+delimiter $$
+create procedure sp_ExcluirProfessor(vIdProfessor int)
+begin
+	delete from tb_curso_professor where id_professor = vIdProfessor;
+    delete from tb_professor where idProfessor = vIdProfessor;
+end$$
+/**/
 
 
 
