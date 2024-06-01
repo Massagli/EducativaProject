@@ -1,8 +1,10 @@
 
 package com.mycompany.educativaproject;
 
+import java.sql.CallableStatement;
 import java.sql.Connection;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 
 public class Curso {
     private String tituloCurso, descricaoCurso, categoriaCurso, areaEnsinoCurso;
@@ -113,9 +115,20 @@ public class Curso {
         ConnectionFactory connection = new ConnectionFactory();
         
         try(Connection c = connection.conexao()){
-            PreparedStatement pstmt = c.prepareStatement("DELETE FROM tb_curso WHERE tituloCurso = ?");
-            pstmt.setString(1,tituloCurso);
-            pstmt.execute();
+            PreparedStatement pstmt = c.prepareStatement("SELECT * FROM tb_curso");
+            ResultSet result = pstmt.executeQuery();
+            
+            while(result.next()){
+                String title = result.getString("tituloCurso");
+                int id = result.getInt("idCurso");
+                if(title.equals(tituloCurso)){
+                    CallableStatement cs = c.prepareCall("{Call sp_ExcluirCurso(?)}");
+                    cs.setInt(1,id);
+                    cs.execute();
+                }
+            }
+            
+            
         }catch(Exception e){
             e.printStackTrace();
         }
