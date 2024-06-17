@@ -15,7 +15,7 @@ public class CadCursoFrame extends javax.swing.JFrame {
 
     public CadCursoFrame() {
         initComponents();
-        
+        setLocationRelativeTo(null);
     }
     
     public void moveParam(String nome, int id){

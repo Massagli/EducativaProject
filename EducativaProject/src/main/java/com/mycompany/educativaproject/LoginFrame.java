@@ -21,6 +21,7 @@ public class LoginFrame extends javax.swing.JFrame {
     public LoginFrame() {
         initComponents();
         setExtendedState(500);
+        setLocationRelativeTo(null);
     }
     
     public String qtdTentativas(){

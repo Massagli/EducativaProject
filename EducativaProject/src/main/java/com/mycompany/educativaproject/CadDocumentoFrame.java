@@ -20,6 +20,7 @@ public class CadDocumentoFrame extends javax.swing.JFrame {
      */
     public CadDocumentoFrame() {
         initComponents();
+        setLocationRelativeTo(null);
     }
     
     public void moveParam(String nome, int id){

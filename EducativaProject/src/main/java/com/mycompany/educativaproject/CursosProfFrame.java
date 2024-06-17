@@ -23,7 +23,7 @@ public class CursosProfFrame extends javax.swing.JFrame {
      */
     public CursosProfFrame() {
         initComponents();
-        
+        setLocationRelativeTo(null);
     }
     
     public void showCursos(){

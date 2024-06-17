@@ -19,6 +19,7 @@ public class CadAlunoFrame extends javax.swing.JFrame {
      */
     public CadAlunoFrame() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**

@@ -21,7 +21,7 @@ public class PerfilFrame extends javax.swing.JFrame {
      */
     public PerfilFrame() {
         initComponents();
-
+        setLocationRelativeTo(null);
         
     }
     

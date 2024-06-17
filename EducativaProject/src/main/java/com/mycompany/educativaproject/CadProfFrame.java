@@ -19,6 +19,7 @@ public class CadProfFrame extends javax.swing.JFrame {
      */
     public CadProfFrame() {
         initComponents();
+        setLocationRelativeTo(null);
     }
 
     /**
